@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:imback/widgets/bottomCard.dart';
+import 'package:imback/widgets/middleCard.dart';
 import 'package:imback/widgets/raisedButton.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -20,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Center(
           child: Text(
             'توعية',
-            style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
           ),
         ),
         actions: <Widget>[
@@ -30,51 +32,30 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          color: Color(0XFF243953),
-          child: Column(
-            children: <Widget>[
-              Container(
-                color: Colors.deepOrange,
-                height: 210,
-              ),
-              SizedBox(
-                height: 50,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Wrap(
-                    spacing: 28.0, // gap between adjacent chips
-                    runSpacing: 20, // gap between lines
-                    direction: Axis.horizontal, // main axis (rows or columns)
-                    children: <Widget>[
-                      RaisedButtonHome('التدابير الوقائية'),
-                      RaisedButtonHome('التضامن'),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Wrap(
-                    spacing: 28.0, // gap between adjacent chips
-                    runSpacing: 20, // gap between lines
-                    direction: Axis.horizontal, // main axis (rows or columns)
-                    children: <Widget>[
-                        RaisedButtonHome('التنبيه التلقائي'),
-                       RaisedButtonHome('أرقام الطوارئ'),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
+      body: Container(
+        color: Color(0XFF243953),
+        child: Column(
+          children: <Widget>[
+            Container(
+              color: Colors.deepOrange,
+              height: 210,
+            ),
+
+            SizedBox(
+              height: 50,
+            ),
+
+            // MiddleCard
+            MiddleCard(),
+
+            SizedBox(
+              height: 33,
+            ),
+
+            // BottomCard
+
+            ButtomCard(),
+          ],
         ),
       ),
     );

@@ -2,32 +2,31 @@ import 'package:flutter/material.dart';
 
 class RaisedButtonHome extends StatelessWidget {
   final text;
+  final img;
 
-  RaisedButtonHome(this.text);
+  RaisedButtonHome(this.text, this.img);
 
   @override
   Widget build(BuildContext context) {
-    return ButtonTheme(
-      minWidth: 165,
-      height: 53,
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.41,
       child: RaisedButton(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
         ),
         elevation: 0.0,
-        padding: EdgeInsets.only(top: 15, bottom: 15, right: 8, left: 8),
+        padding: EdgeInsets.only(top: 15, bottom: 15, right: 11, left: 8),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Icon(
-              Icons.add_alarm,
-              color: Colors.white,
-            ),
+            Image.asset('assets/images/$img.png', scale: 4),
             SizedBox(
               width: 25,
             ),
             Text(
               text,
-              style: TextStyle(color: Colors.white, fontSize: 18),
+              style: TextStyle(
+                  color: Colors.white, fontSize: 15, fontFamily: 'Questv'),
             )
           ],
         ),
