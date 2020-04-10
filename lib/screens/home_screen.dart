@@ -96,8 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   FlatButton(
                                     shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(8.0),
+                                      borderRadius: BorderRadius.circular(8.0),
                                     ),
                                     onPressed: () => {},
                                     child: Text(
@@ -108,8 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     color: Colors.white,
                                     textColor: Colors.deepOrange,
-                                    padding:
-                                        EdgeInsets.fromLTRB(55, 0, 55, 0),
+                                    padding: EdgeInsets.fromLTRB(55, 0, 55, 0),
                                   )
                                 ],
                               ),

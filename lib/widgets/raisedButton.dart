@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 class RaisedButtonHome extends StatelessWidget {
   final text;
   final img;
+  // BuildContext context;
+  String routeName;
 
-  RaisedButtonHome(this.text, this.img);
+  RaisedButtonHome(this.text, this.img, this.routeName);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,9 @@ class RaisedButtonHome extends StatelessWidget {
           ],
         ),
         color: Color(0xff264772),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, routeName);
+        },
       ),
     );
   }

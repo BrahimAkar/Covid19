@@ -14,7 +14,7 @@ class ButtomCard extends StatelessWidget {
           padding: const EdgeInsets.all(18.0),
           child: ListTile(
             leading: GestureDetector(
-              onTap: () => Navigator.pushNamed(context, '/second'),
+              onTap: () => Navigator.pushNamed(context, '/maplive'),
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.white70,
@@ -30,13 +30,14 @@ class ButtomCard extends StatelessWidget {
             ),
             title: Text(
               'آخر الإحصائيات بالمغرب',
-              style: TextStyle(color: Colors.white, fontSize: 21),
+              style: TextStyle(color: Colors.white, fontSize: 21,fontFamily: 'Questv'),
               textAlign: TextAlign.right,
             ),
             subtitle: Text(
               'محدثة بشكل مستمر',
               style: TextStyle(color: Colors.white),
               textAlign: TextAlign.right,
+              
             ),
             isThreeLine: true,
           ),
