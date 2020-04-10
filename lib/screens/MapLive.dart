@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:imback/consts.dart';
+import 'package:imback/widgets/mapCard.dart';
 
 class MapLive extends StatefulWidget {
   @override
@@ -13,16 +15,11 @@ class MapLive extends StatefulWidget {
 class _MapLiveState extends State<MapLive> {
   GoogleMapController mapController;
 
-
   GoogleMapController _controller;
   bool isMapCreated = false;
   final LatLng _center = const LatLng(28.98696, -10.05738);
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
-  }
-
-  changeMapMode() {
-    getJsonFile('assets/dark.json').then(setMapStyle);
   }
 
   Future<String> getJsonFile(String path) async {
@@ -35,12 +32,14 @@ class _MapLiveState extends State<MapLive> {
 
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: ColorsApp.mainColor,
-        leading: Icon(Icons.arrow_back_ios),
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        leading: GestureDetector(
+            onTap: () => Navigator.pop(context),
+            child: Icon(Icons.arrow_back_ios)),
         title: Center(child: Text('تحديثات مباشرة')),
         actions: <Widget>[
           Padding(
@@ -50,10 +49,11 @@ class _MapLiveState extends State<MapLive> {
         ],
       ),
       body: Stack(
+        
         children: <Widget>[
           GoogleMap(
             onMapCreated: (GoogleMapController controller) {
-              isMapCreated = true;
+              //      isMapCreated = true;
               _controller = controller;
               getJsonFile('assets/dark.json').then(setMapStyle);
             },
@@ -62,40 +62,7 @@ class _MapLiveState extends State<MapLive> {
               zoom: 5.0,
             ),
           ),
-          Positioned(
-            bottom: 15,
-            left: 8,
-            right: 8,
-            child: Container(
-              padding: EdgeInsets.all(15),
-              width: MediaQuery.of(context).size.width,
-              height: 89,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10), color: Colors.white),
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Icon(Icons.notifications_active),
-                      Text('مدينة كلميم')
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text('بؤرة تفشي'),
-                      Icon(
-                        Icons.donut_large,
-                        color: Colors.red,
-                      ),
-                      Text('جهة كلميم السمارة'),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          )
+          MapCard(),
         ],
       ),
     );
