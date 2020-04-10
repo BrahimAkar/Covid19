@@ -14,7 +14,7 @@ class ButtomCard extends StatelessWidget {
           padding: const EdgeInsets.all(18.0),
           child: ListTile(
             leading: GestureDetector(
-              onTap: () => print('Taper' + DateTime.now().toString()),
+              onTap: () => Navigator.pushNamed(context, '/second'),
               child: Container(
                 decoration: BoxDecoration(
                     color: Colors.white70,

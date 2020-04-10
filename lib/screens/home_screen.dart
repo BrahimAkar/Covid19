@@ -22,7 +22,11 @@ class _HomeScreenState extends State<HomeScreen> {
         title: Center(
           child: Text(
             'توعية',
-            style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Questv'),
           ),
         ),
         actions: <Widget>[
@@ -32,30 +36,108 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: Container(
-        color: Color(0XFF243953),
-        child: Column(
-          children: <Widget>[
-            Container(
-              color: Colors.deepOrange,
-              height: 210,
-            ),
+      body: SingleChildScrollView(
+        child: Container(
+          color: Color(0XFF243953),
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: 50,
+              ),
+              Container(
+                child: Column(
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(28)),
+                          color: Colors.deepOrange),
+                      padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                      margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                      child: Row(
+                        children: <Widget>[
+                          Flexible(
+                            flex: 5,
+                            child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 250,
+                                child: Stack(
+                                  overflow: Overflow.visible,
+                                  children: <Widget>[
+                                    Positioned(
+                                        top: -109,
+                                        left: 5,
+                                        child: Image.asset(
+                                          'assets/images/doctor.png',
+                                          width: 150,
+                                          height: 450,
+                                        ))
+                                  ],
+                                )),
+                          ),
+                          Flexible(
+                            flex: 5,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              height: 250,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    'كل مايجب ان تعرفه \n لتحمي نفسك من \n فيروس كورونا',
+                                    textAlign: TextAlign.right,
+                                    style: TextStyle(
+                                        fontSize: 23,
+                                        fontFamily: 'Questv',
+                                        color: Colors.white),
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  FlatButton(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(8.0),
+                                    ),
+                                    onPressed: () => {},
+                                    child: Text(
+                                      'قراءة',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontFamily: 'Questv', fontSize: 18),
+                                    ),
+                                    color: Colors.white,
+                                    textColor: Colors.deepOrange,
+                                    padding:
+                                        EdgeInsets.fromLTRB(55, 0, 55, 0),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
 
-            SizedBox(
-              height: 50,
-            ),
+                    SizedBox(
+                      height: 40,
+                    ),
 
-            // MiddleCard
-            MiddleCard(),
+                    // MiddleCard
+                    MiddleCard(),
 
-            SizedBox(
-              height: 33,
-            ),
+                    SizedBox(
+                      height: 25,
+                    ),
 
-            // BottomCard
+                    // BottomCard
 
-            ButtomCard(),
-          ],
+                    ButtomCard(),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
