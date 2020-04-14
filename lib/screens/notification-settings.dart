@@ -154,11 +154,6 @@ class _NotificationsettingsState extends State<Notificationsettings> {
                                 ],
                               )
                             ]),
-                            RaisedButton(
-                              onPressed: () =>
-                                  Navigator.pushNamed(context, "/medical"),
-                              child: Text('click'),
-                            )
                           ]),
                     ]))));
   }
@@ -227,13 +222,13 @@ class _NotificationsettingsState extends State<Notificationsettings> {
       prefs.setBool('activeall', true);
     }
 
-    if ((key != "desactiveall" || key != 'activeall') && val == true) {
-      prefs.setBool('activeall', false);
-      prefs.setBool('desactiveall', true);
-    }
+    // if ((key != "desactiveall" || key != 'activeall') && val == true) {
+    //prefs.setBool('activeall', false);
+    //prefs.setBool('desactiveall', true);
+    // }
     if ((key != "desactiveall" || key != 'activeall') && val == false) {
-      prefs.setBool('activeall', true);
-      prefs.setBool('desactiveall', false);
+      // prefs.setBool('activeall', true);
+      // prefs.setBool('desactiveall', false);
 
       if (key == "clean" && this.timerclean != null) {
         timerclean.cancel();
@@ -359,7 +354,7 @@ class _NotificationsettingsState extends State<Notificationsettings> {
       id,
       title,
       message,
-      RepeatInterval.Hourly,
+      RepeatInterval.EveryMinute,
       platformChannelSpecifics,
     );
   }
@@ -404,7 +399,7 @@ class _NotificationsettingsState extends State<Notificationsettings> {
     if (channelname == "clean") {
       Duration(seconds: 5);
       return _scheduleNotification(id, 20, 'channel1', "id1", "clean",
-          "clean.wav", 'لاتنسى ان الكظافة من الايمان', 'النظافة');
+          "clean.wav", 'لاتنسى ان النظافة من الايمان', 'النظافة');
     }
     if (channelname == "sport") {
       Duration(seconds: 20);
@@ -430,7 +425,7 @@ class _NotificationsettingsState extends State<Notificationsettings> {
           "id3",
           "eat",
           "eat.wav",
-          'نظف واغسل واخرص على تعقيم يديك او ملابسك او احديتك',
+          'نظف واغسل واحرص على تعقيم يديك او ملابسك او احديتك',
           'الغسل والتنظيف');
     }
     if (channelname == "getout") {
