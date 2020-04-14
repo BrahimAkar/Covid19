@@ -19,7 +19,6 @@ class MiddleCard extends StatelessWidget {
                   'التدابير الوقائية',
                   'wikaya',
                   '/medical',
-                  
                 ),
               ],
             ),
@@ -36,8 +35,8 @@ class MiddleCard extends StatelessWidget {
               runSpacing: 20, // gap between lines
               direction: Axis.horizontal, // main axis (rows or columns)
               children: <Widget>[
-                RaisedButtonHome('التنبيه التلقائي  ', 'tanbih',null),
-                RaisedButtonHome('أرقام الطوارئ   ', 'tawari',null),
+                RaisedButtonHome('التنبيه التلقائي  ', 'tanbih', '/notification'),
+                RaisedButtonHome('أرقام الطوارئ   ', 'tawari', '/sos'),
               ],
             ),
           ],

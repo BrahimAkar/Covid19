@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "124503811990",
+    "firebase_url": "https://covide19-28508.firebaseio.com",
+    "project_id": "covide19-28508",
+    "storage_bucket": "covide19-28508.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:124503811990:android:073cc7c21af4d7cd441fb7",
+        "android_client_info": {
+          "package_name": "com.example.imback"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "124503811990-vefrhjl3rvecdg1vdic64f6b33vot6vh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMHHbjlECXaBgxQ-GXn2q180jMAm8keZY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "124503811990-vefrhjl3rvecdg1vdic64f6b33vot6vh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

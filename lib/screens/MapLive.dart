@@ -26,6 +26,11 @@ class _MapLiveState extends State<MapLive> {
     return await rootBundle.loadString(path);
   }
 
+  Future<String> _worldmap() async {
+    await Future.delayed(Duration(seconds: 1));
+    return 'Nothing';
+  }
+
   void setMapStyle(String mapStyle) {
     _controller.setMapStyle(mapStyle);
   }
@@ -48,22 +53,48 @@ class _MapLiveState extends State<MapLive> {
           )
         ],
       ),
-      body: Stack(
-        
-        children: <Widget>[
-          GoogleMap(
-            onMapCreated: (GoogleMapController controller) {
-              //      isMapCreated = true;
-              _controller = controller;
-              getJsonFile('assets/dark.json').then(setMapStyle);
-            },
-            initialCameraPosition: CameraPosition(
-              target: _center,
-              zoom: 5.0,
-            ),
-          ),
-          MapCard(),
-        ],
+      body: FutureBuilder(
+        future: _worldmap(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Stack(
+              children: <Widget>[
+                GoogleMap(
+                  onMapCreated: (GoogleMapController controller) {
+                    //      isMapCreated = true;
+                    _controller = controller;
+                    getJsonFile('assets/dark.json').then(setMapStyle);
+                  },
+                  initialCameraPosition: CameraPosition(
+                    target: _center,
+                    zoom: 5.0,
+                  ),
+                ),
+                MapCard(),
+              ],
+            );
+          } else {
+            return Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              color: Color(0xFF1B2C41),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    height: 50,
+                    width: 50,
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.yellow,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+        },
       ),
     );
   }

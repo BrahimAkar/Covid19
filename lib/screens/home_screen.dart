@@ -98,7 +98,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8.0),
                                     ),
-                                    onPressed: () => {},
+                                    onPressed: () => {
+                                      Navigator.pushNamed(
+                                          context, '/coronaexp'),
+                                    },
                                     child: Text(
                                       'قراءة',
                                       textAlign: TextAlign.center,
