@@ -35,6 +35,8 @@ dependencies:
   background_fetch: '^0.5.1'
   workmanager: ^0.2.0
   provider: ^4.0.5
+  flutter_map: ^0.9.0
+  webview_flutter: ^0.3.19+9
   
 
   # The following adds the Cupertino Icons font to your application.

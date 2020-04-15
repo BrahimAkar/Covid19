@@ -14,11 +14,11 @@ class MiddleCard extends StatelessWidget {
               runSpacing: 20, // gap between lines
               direction: Axis.horizontal, // main axis (rows or columns)
               children: <Widget>[
-                RaisedButtonHome('التضامن  ', 'tadamon', null),
+                RaisedButtonHome('التضامن  ', 'tadamon', '/solidarite'),
                 RaisedButtonHome(
                   'التدابير الوقائية',
                   'wikaya',
-                  '/medical',
+                  '/tadabir',
                 ),
               ],
             ),

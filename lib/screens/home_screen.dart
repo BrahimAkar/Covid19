@@ -12,13 +12,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
+    
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Color(0xFF243953),
-        leading: IconButton(
-          onPressed: () => {},
-          icon: Icon(Icons.search),
-        ),
+       
         title: Center(
           child: Text(
             'توعية',
@@ -29,12 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 fontFamily: 'Questv'),
           ),
         ),
-        actions: <Widget>[
-          IconButton(
-            onPressed: () => {},
-            icon: Icon(Icons.menu),
-          ),
-        ],
+       
       ),
       body: SingleChildScrollView(
         child: Container(

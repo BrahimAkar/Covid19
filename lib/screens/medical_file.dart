@@ -46,12 +46,12 @@ class _DocumentMedicalState extends State<DocumentMedical> {
             child: SingleChildScrollView(
       child: Stack(children: <Widget>[
         Container(
-          width: 450,
-          height: 650,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
-              color: Color(0XFF243953),
-              borderRadius: BorderRadius.circular(10)),
+            color: Color(0XFF243953),
+          ),
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <
               Widget>[
             Inputs().text('الملف الطبي', 30),
@@ -160,9 +160,10 @@ class _DocumentMedicalState extends State<DocumentMedical> {
               child: Container(
                   child: RaisedButton.icon(
                       color: Colors.lightBlue,
-                      onPressed: () => print(_controller.text),
-                      icon:
-                          Icon(Icons.check_circle_outline, color: Colors.green),
+                      onPressed: () => Scaffold.of(context).showSnackBar(
+                          SnackBar(content: Text('تم الحفظ بنجاح!'))),
+                      icon: Icon(Icons.check_circle_outline,
+                          color: Colors.white60),
                       label: Text('مصادقة'))),
             )
           ]),

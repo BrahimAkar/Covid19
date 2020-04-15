@@ -8,13 +8,18 @@ import 'package:imback/models/user.dart';
 import 'package:imback/screens/Corona_explain.dart';
 import 'package:imback/screens/medical_file.dart';
 import 'package:imback/screens/notification-settings.dart';
+import 'package:imback/screens/solidarite.dart';
 import 'package:imback/screens/sos.dart';
+import 'package:imback/screens/tadabir.dart';
+import 'package:imback/screens/test_map.dart';
 import 'package:imback/services/auth.dart';
 import 'package:imback/wrapper.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'screens/home_screen.dart';
 import 'screens/MapLive.dart';
+import './newpage.dart';
+import 'dart:math';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -27,6 +32,20 @@ final BehaviorSubject<String> selectNotificationSubject =
     BehaviorSubject<String>();
 
 NotificationAppLaunchDetails notificationAppLaunchDetails;
+
+class ReceivedNotification {
+  final int id;
+  final String title;
+  final String body;
+  final String payload;
+
+  ReceivedNotification({
+    @required this.id,
+    @required this.title,
+    @required this.body,
+    @required this.payload,
+  });
+}
 
 void backgroundFetchHeadlessTask(String taskId) async {
   print('[BackgroundFetch] Headless event received.');
@@ -82,7 +101,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.red,
           accentColor: Color(0XFFFEF9B),
         ),
-        initialRoute: '/',
+        initialRoute: '/tadabir',
         routes: {
           '/': (context) => HomeScreen(),
           '/medical': (context) => DocumentMedical(),
@@ -92,9 +111,13 @@ class MyApp extends StatelessWidget {
           '/authenticate': (context) => Authenticate(),
           '/coronaexp': (context) => CoronaExplain(),
           '/sos': (context) => Sos(),
-          '/notification': (context) => Notificationsettings()
+          '/notification': (context) => Notificationsettings(),
+          '/testmap': (context) => TestMap(),
+          '/tadabir': (context) => Tadabir(),
+          '/solidarite': (context) => Solidarite()
         },
       ),
     );
   }
 }
+
