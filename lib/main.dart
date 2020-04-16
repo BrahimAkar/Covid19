@@ -4,6 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:imback/Authenticate/authenticate.dart';
 import 'package:imback/Authenticate/signin.dart';
 import 'package:imback/screens/Corona_explain.dart';
+import 'package:imback/screens/all_Images.dart';
 import 'package:imback/screens/medical_file.dart';
 import 'package:imback/screens/solidarite.dart';
 import 'package:imback/screens/sos.dart';
@@ -93,10 +94,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
         accentColor: Color(0XFFFEF9B),
       ),
-      home: HomeScreen(),
       initialRoute: '/',
+      home: HomeScreen(),
       routes: {
-        '/home': (context) => HomeScreen(),
+        
         '/medical': (context) => DocumentMedical(),
         '/maplive': (context) => MapLive(),
         '/wrap': (context) => Wrapper(),
@@ -108,7 +109,9 @@ class MyApp extends StatelessWidget {
         '/testmap': (context) => TestMap(),
         '/tadabir': (context) => Tadabir(),
         '/notification': (context) => Notificationsettings(),
-        '/solidarite': (context) => Solidarite()
+        '/solidarite': (context) => Solidarite(),
+        '/allimages': (context) => AllImages()
+        //  '/secondscreen' : (context) => SecondScreen(payload)/
       },
     );
   }
@@ -230,11 +233,9 @@ class _NotificationsettingsState extends State<Notificationsettings> {
     return Scaffold(
         body: Center(
             child: Container(
-                width: 400,
+                width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    color: Color(0XFF243953),
-                    borderRadius: BorderRadius.circular(10)),
+                color: Color(0XFF243953),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -395,7 +396,7 @@ class _NotificationsettingsState extends State<Notificationsettings> {
         id,
         element,
         "المرجو الالتزام بالتدابير الوقائية للحفاظ على سلامتكم",
-        RepeatInterval.EveryMinute,
+        RepeatInterval.Hourly,
         platformChannelSpecifics,
         payload: element);
   }

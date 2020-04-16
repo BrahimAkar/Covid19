@@ -9,15 +9,15 @@ class Solidarite extends StatelessWidget {
   List<Color> fifthCard = [Color(0xffFD3755), Color(0xffFE965C)];
   List<Color> sixthCard = [Color(0xff273EFD), Color(0xff9930FE)];
   List<String> texts = [
-    "تدابير وقائية ونصائح ضد فيروس كوفيد 19، المصدر منظمة الصحة العالمية",
-    "تدابير وقائية ضد فيروس كوفيد 19، المصدر وزارة الصحة",
+    "تبرع للصنودق الخاص بإدارة جائحة كوفيد 19 عبر موقع الخزينة العامة للمملكة",
+    "تبرع للصندوق الخاص بإدارة جائحة كوفيد 19 عبر رسالة قصيرة SMS",
     "تدابير لجنة اليقظة الاقتصادية ووزارة الاقتصاد والمالية وإصلاح الإدارة",
     "التعرف على التدابير الوقائية لمحاربة فيروس كوفيد 19",
     "الملف الطبي المرجعي",
     "المستجدات"
   ];
   List<String> pageLinks = [
-    "http://www.emro.who.int/ar/health-topics/corona-virus/information-resources.html",
+    "https://www.tgr.gov.ma/wps/portal/donsenlignecoronavirus",
     "https://www.sante.gov.ma/Pages/corona.aspx",
     "https://www.finances.gov.ma/ar/%D9%85%D9%87%D9%86%D9%86%D8%A7/Pages/%D9%84%D8%AC%D9%86%D8%A9-%D8%A7%D9%84%D9%8A%D9%82%D8%B8%D8%A9-%D8%A7%D9%84%D8%A7%D9%82%D8%AA%D8%B5%D8%A7%D8%AF%D9%8A%D8%A9.aspx",
     "",
@@ -49,26 +49,13 @@ class Solidarite extends StatelessWidget {
               SizedBox(
                 height: 9,
               ),
-              CardTadabir(secondCard, _stops, texts[1], pageLinks[1], null),
+              CardTadabir(fourthCard, _stops, texts[1], 'sms:1919', null),
               SizedBox(
                 height: 9,
               ),
-              CardTadabir(thirdard, _stops, texts[2], pageLinks[2], ""),
-              SizedBox(
-                height: 9,
-              ),
-              CardTadabir(fourthCard, _stops, texts[3], null, ""),
-              SizedBox(
-                height: 9,
-              ),
-              CardTadabir(fifthCard, _stops, texts[4], null, "/medical"),
-              SizedBox(
-                height: 9,
-              ),
-              CardTadabir(sixthCard, _stops, texts[5], null, "/testmap"),
-              SizedBox(
-                height: 9,
-              ),
+              Container(
+                  padding: EdgeInsets.only(left: 15, right: 15, top: 5),
+                  child: Image.asset('assets/images/wh.jpg')),
             ],
           ),
         ),

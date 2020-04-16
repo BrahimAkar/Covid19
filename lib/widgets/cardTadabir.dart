@@ -49,6 +49,7 @@ class CardTadabir extends StatelessWidget {
                     child: Text(
                       textCardTadabir,
                       textAlign: TextAlign.right,
+                      textDirection: TextDirection.rtl,
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 18,

@@ -66,6 +66,7 @@ flutter:
     - assets/eat.jpg
     - assets/sport.jpg
     - assets/getout.jpg
+    - assets/images/markor.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -108,7 +108,7 @@ class _SosState extends State<Sos> {
                       style: TextStyle(fontSize: 20),
                     ),
                     subtitle: Text(
-                      '300',
+                      '300\n',
                       style: TextStyle(fontSize: 18, fontFamily: 'Raleway'),
                     ),
                     trailing: Column(
