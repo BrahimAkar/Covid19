@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:imback/Authenticate/authenticate.dart';
-import 'package:imback/Authenticate/signin.dart';
+
 import 'package:imback/screens/Corona_explain.dart';
 import 'package:imback/screens/all_Images.dart';
 import 'package:imback/screens/medical_file.dart';
@@ -10,7 +9,7 @@ import 'package:imback/screens/solidarite.dart';
 import 'package:imback/screens/sos.dart';
 import 'package:imback/screens/tadabir.dart';
 import 'package:imback/screens/test_map.dart';
-import 'package:imback/wrapper.dart';
+
 import 'package:rxdart/rxdart.dart';
 import 'screens/home_screen.dart';
 import 'screens/MapLive.dart';
@@ -99,9 +98,6 @@ class MyApp extends StatelessWidget {
       routes: {
         '/medical': (context) => DocumentMedical(),
         '/maplive': (context) => MapLive(),
-        '/wrap': (context) => Wrapper(),
-        '/signin': (context) => SignIn(),
-        '/authenticate': (context) => Authenticate(),
         '/coronaexp': (context) => CoronaExplain(),
         '/sos': (context) => Sos(),
         //'/notification': (context) => Notificationsettings(),
