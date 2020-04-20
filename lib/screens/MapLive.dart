@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:imback/widgets/mapCard.dart';
 import 'package:imback/classes/Corona.dart';
 
+
 Future<Corona> fetchCorona() async {
   final response = await http.get('https://api.covid19api.com/summary');
 
@@ -131,7 +132,7 @@ class _MapLiveState extends State<MapLive> {
                 if (snapshot.hasData) {
                   print(snapshot.data);
                   return MapCard(snapshot.data.recovered, snapshot.data.deaths,
-                      snapshot.data.totalCases,snapshot.data.date);
+                      snapshot.data.totalCases, snapshot.data.date);
                 } else {
                   return Container(
                     height: MediaQuery.of(context).size.height,

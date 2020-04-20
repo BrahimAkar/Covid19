@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:imback/widgets/bottomCard.dart';
 import 'package:imback/widgets/middleCard.dart';
@@ -12,12 +13,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
-    
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Color(0xFF243953),
-       
         title: Center(
           child: Text(
             'توعية',
@@ -28,7 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 fontFamily: 'Questv'),
           ),
         ),
-       
       ),
       body: SingleChildScrollView(
         child: Container(

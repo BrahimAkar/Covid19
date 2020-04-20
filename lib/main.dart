@@ -97,7 +97,6 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       home: HomeScreen(),
       routes: {
-        
         '/medical': (context) => DocumentMedical(),
         '/maplive': (context) => MapLive(),
         '/wrap': (context) => Wrapper(),
@@ -231,60 +230,82 @@ class _NotificationsettingsState extends State<Notificationsettings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-            child: Container(
-                width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.all(10),
-                color: Color(0XFF243953),
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Inputs().text('اعدادات التنبيه الوقائي', 30)
-                        ],
-                      ),
-                      Divider(color: Colors.white, height: 30),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Color(0xFF243953),
+        ),
+        body: SingleChildScrollView(
+          child: Center(
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height,
+                  padding: EdgeInsets.all(10),
+                  color: Color(0XFF243953),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Center(
+                            child: Image.asset(
+                          'assets/images/soslogo.png',
+                          fit: BoxFit.cover,
+                        )),
+                        SizedBox(
+                          height: 80,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            buildedswitch("hour"),
-                            SizedBox(
-                              width: 250,
-                              child: Inputs().text(
-                                  'التذكير بالتدابير الوقائية كل ساعة   ', 20),
-                            )
-                          ]),
-                      Divider(),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            buildedswitch('day'),
-                            SizedBox(
-                              width: 250,
-                              child: Inputs().text(
-                                  '      التذكير بالتدابير الوقائية مرة واحدة كل يوم',
-                                  20),
-                            )
-                          ]),
-                      Divider(),
-                      Row(
-                        children: <Widget>[],
-                      ),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            buildedswitch("twohours"),
-                            SizedBox(
-                              width: 250,
-                              child: Inputs().text(
-                                  'التذكير بالتدابير الوقائية مرتين في اليوم ',
-                                  20),
-                            )
-                          ]),
-                      Divider(color: Colors.white, height: 30),
-                    ]))));
+                            Inputs().text('اعدادات التنبيه الوقائي', 30)
+                          ],
+                        ),
+                        Divider(color: Colors.white, height: 30),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              buildedswitch("hour"),
+                              SizedBox(
+                                width: 250,
+                                child: Inputs().text(
+                                    'التذكير بالتدابير الوقائية كل ساعة   ',
+                                    20),
+                              )
+                            ]),
+                        Divider(),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              buildedswitch('day'),
+                              SizedBox(
+                                width: 250,
+                                child: Inputs().text(
+                                    '      التذكير بالتدابير الوقائية مرة واحدة كل يوم',
+                                    20),
+                              )
+                            ]),
+                        Divider(),
+                        Row(
+                          children: <Widget>[],
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: <Widget>[
+                              buildedswitch("twohours"),
+                              SizedBox(
+                                width: 250,
+                                child: Inputs().text(
+                                    'التذكير بالتدابير الوقائية مرتين في اليوم ',
+                                    20),
+                              )
+                            ]),
+                        Divider(color: Colors.white, height: 30),
+                      ])),
+            ],
+          )),
+        ));
   }
 
   FutureBuilder buildedswitch(key) {
@@ -396,7 +417,7 @@ class _NotificationsettingsState extends State<Notificationsettings> {
         id,
         element,
         "المرجو الالتزام بالتدابير الوقائية للحفاظ على سلامتكم",
-        RepeatInterval.Hourly,
+        RepeatInterval.EveryMinute,
         platformChannelSpecifics,
         payload: element);
   }

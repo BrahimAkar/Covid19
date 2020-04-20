@@ -10,7 +10,7 @@ class MiddleCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Wrap(
-              spacing: 28.0, // gap between adjacent chips
+              spacing: 10.0, // gap between adjacent chips
               runSpacing: 20, // gap between lines
               direction: Axis.horizontal, // main axis (rows or columns)
               children: <Widget>[
@@ -31,11 +31,12 @@ class MiddleCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Wrap(
-              spacing: 28.0, // gap between adjacent chips
+              spacing: 10, // gap between adjacent chips
               runSpacing: 20, // gap between lines
               direction: Axis.horizontal, // main axis (rows or columns)
               children: <Widget>[
-                RaisedButtonHome('التنبيه التلقائي  ', 'tanbih', '/notification'),
+                RaisedButtonHome(
+                    'التنبيه التلقائي  ', 'tanbih', '/notification'),
                 RaisedButtonHome('أرقام الطوارئ   ', 'tawari', '/sos'),
               ],
             ),
