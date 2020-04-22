@@ -39,7 +39,7 @@ class CardTadabir extends StatelessWidget {
           //    margin: EdgeInsets.all(5.0),
               padding: EdgeInsets.only(right: 15),
              
-              height: 111,
+              height: MediaQuery.of(context).size.height/9,
               width: MediaQuery.of(context).size.width,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,

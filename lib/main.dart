@@ -1,35 +1,26 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'package:imback/screens/Corona_explain.dart';
+import 'package:imback/screens/addNewMedicalFile.dart';
 import 'package:imback/screens/all_Images.dart';
-import 'package:imback/screens/medical_file.dart';
+
 import 'package:imback/screens/solidarite.dart';
 import 'package:imback/screens/sos.dart';
 import 'package:imback/screens/tadabir.dart';
 import 'package:imback/screens/test_map.dart';
-
+import 'package:imback/widgets/text.dart';
+import 'package:imback/widgets/iconbutton.dart';
 import 'package:rxdart/rxdart.dart';
 import 'screens/home_screen.dart';
 import 'screens/MapLive.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:rxdart/subjects.dart';
-import './widgets/inputs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:math';
-
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
-
-// Streams are created so that app can respond to notification-related events since the plugin is initialised in the `main` function
-final BehaviorSubject<ReceivedNotification> didReceiveLocalNotificationSubject =
-    BehaviorSubject<ReceivedNotification>();
-
-final BehaviorSubject<String> selectNotificationSubject =
-    BehaviorSubject<String>();
-
-NotificationAppLaunchDetails notificationAppLaunchDetails;
+import 'dart:ui';
 
 class ReceivedNotification {
   final int id;
@@ -45,16 +36,24 @@ class ReceivedNotification {
   });
 }
 
+String $payload = "";
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+// Streams are created so that app can respond to notification-related events since the plugin is initialised in the `main` function
+final BehaviorSubject<ReceivedNotification> didReceiveLocalNotificationSubject =
+    BehaviorSubject<ReceivedNotification>();
+
+final BehaviorSubject<String> selectNotificationSubject =
+    BehaviorSubject<String>();
+
+NotificationAppLaunchDetails notificationAppLaunchDetails;
+
 void main() async {
-/*
-  Workmanager.initialize(
-    callbackDispatcher, // The top level function, aka callbackDispatcher
-    isInDebugMode: true // If enabled it will post a notification whenever the task is running. Handy for debugging tasks
-  );
-
-  Workmanager.registerOneOffTask("1", "simpleTask");*/
-
   WidgetsFlutterBinding.ensureInitialized();
+  await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+
   var initializationSettingsAndroid =
       AndroidInitializationSettings('@mipmap/ic_launcher');
   // Note: permissions aren't requested here just to demonstrate that can be done later using the `requestPermissions()` method
@@ -77,7 +76,6 @@ void main() async {
     }
     selectNotificationSubject.add(payload);
   });
-
   runApp(MyApp());
 }
 
@@ -96,17 +94,16 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       home: HomeScreen(),
       routes: {
-        '/medical': (context) => DocumentMedical(),
+        'secondscreen': (context) => SecondScreen($payload),
         '/maplive': (context) => MapLive(),
         '/coronaexp': (context) => CoronaExplain(),
         '/sos': (context) => Sos(),
-        //'/notification': (context) => Notificationsettings(),
         '/testmap': (context) => TestMap(),
         '/tadabir': (context) => Tadabir(),
         '/notification': (context) => Notificationsettings(),
         '/solidarite': (context) => Solidarite(),
-        '/allimages': (context) => AllImages()
-        //  '/secondscreen' : (context) => SecondScreen(payload)/
+        '/allimages': (context) => AllImages(),
+        '/addnewmedicalfile': (context) => AddNewMedicalFile()
       },
     );
   }
@@ -122,8 +119,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Center(
-      child: Text('main'),
-    ));
+            child: IconButtons(
+                text: 'clickme',
+                method: () => print('hello'),
+                snapcolor: Colors.redAccent,
+                textcolor: Colors.black,
+                backcolor: Colors.blue,
+                icon: Icon(Icons.not_interested))));
   }
 }
 
@@ -133,14 +135,15 @@ class Notificationsettings extends StatefulWidget {
 }
 
 class _NotificationsettingsState extends State<Notificationsettings> {
-  //start of notifictation methods
   final MethodChannel platform =
       MethodChannel('crossingthestreams.io/resourceResolver');
+
+  @override
   void initState() {
     super.initState();
     _requestIOSPermissions();
-    _configureDidReceiveLocalNotificationSubject();
-    _configureSelectNotificationSubject();
+    _configureDidReceiveLocalNotificationSubjectclean();
+    _configureSelectNotificationSubjectclean();
   }
 
   void _requestIOSPermissions() {
@@ -154,13 +157,21 @@ class _NotificationsettingsState extends State<Notificationsettings> {
         );
   }
 
-  void _configureDidReceiveLocalNotificationSubject() {
+  void dispose() {
+    didReceiveLocalNotificationSubject.close();
+    selectNotificationSubject.close();
+    super.dispose();
+  }
+
+//start onfiguring a notification
+//configuration working with notifications to return the playload to second calss and handel user reaction to it
+  void _configureDidReceiveLocalNotificationSubjectclean() {
     didReceiveLocalNotificationSubject.stream
         .listen((ReceivedNotification receivedNotification) async {
       await showDialog(
         context: context,
         builder: (BuildContext context) => CupertinoAlertDialog(
-          title: receivedNotification.title != null
+          title: receivedNotification.title != "this is some title"
               ? Text(receivedNotification.title)
               : null,
           content: receivedNotification.body != null
@@ -173,12 +184,10 @@ class _NotificationsettingsState extends State<Notificationsettings> {
               onPressed: () async {
                 Navigator.of(context, rootNavigator: true).pop();
                 await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        SecondScreen(receivedNotification.payload),
-                  ),
-                );
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            SecondScreen($payload)));
               },
             )
           ],
@@ -187,124 +196,119 @@ class _NotificationsettingsState extends State<Notificationsettings> {
     });
   }
 
-  void _configureSelectNotificationSubject() {
+  void _configureSelectNotificationSubjectclean() {
     selectNotificationSubject.stream.listen((String payload) async {
       await Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => SecondScreen(payload)),
-      );
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) => SecondScreen(payload)));
     });
-  }
-
-  ////
-  void dispose() {
-    didReceiveLocalNotificationSubject.close();
-    selectNotificationSubject.close();
-    super.dispose();
-  }
-
-  String elements() {
-    var name = "";
-    var i = new Random();
-    var t = i.nextInt(4);
-    if (t == 0) {
-      name = "clean";
-    }
-    if (t == 1) {
-      name = "sport";
-    }
-    if (t == 2) {
-      name = "eat";
-    }
-    if (t == 3) {
-      name = "getout";
-    }
-
-    return name;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Color(0xFF243953),
-        ),
-        body: SingleChildScrollView(
-          child: Center(
-              child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  padding: EdgeInsets.all(10),
-                  color: Color(0XFF243953),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Center(
-                            child: Image.asset(
-                          'assets/images/soslogo.png',
-                          fit: BoxFit.cover,
-                        )),
-                        SizedBox(
-                          height: 80,
-                        ),
-                        Row(
+        body: Center(
+            child: Container(
+                width: 400,
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                    color: Color(0XFF243953),
+                    borderRadius: BorderRadius.circular(10)),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Texts().text('اعدادات التنبيه الوقائي', 30)
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(Icons.notifications_active,
+                              color: Colors.white, size: 44),
+                        ],
+                      ),
+                      Divider(color: Colors.white, height: 60),
+
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            buildedswitch("clean", "clean", 1),
+                            SizedBox(
+                              width: 250,
+                              child: Texts()
+                                  .text('التذكير  بالحفاظ على النظافة', 20),
+                            )
+                          ]),
+                      Divider(),
+
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            buildedswitch('getout', 'getout', 2),
+                            SizedBox(
+                              width: 250,
+                              child: Texts().text(
+                                  'التذكير بالتدابير الوقائية عند الخروج من البيت',
+                                  20),
+                            )
+                          ]),
+
+                      Divider(),
+
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            buildedswitch("eat", "eat", 3),
+                            SizedBox(
+                              width: 250,
+                              child: Texts().text('التذكير بنظام التغذية', 20),
+                            )
+                          ]),
+
+                      // Divider(),
+
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            buildedswitch("sport", "sport", 4),
+                            SizedBox(
+                              width: 250,
+                              child:
+                                  Texts().text('التذكير بالنظام الرياضي ', 20),
+                            )
+                          ]),
+
+                      Divider(color: Colors.white, height: 30),
+
+                      Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Inputs().text('اعدادات التنبيه الوقائي', 30)
-                          ],
-                        ),
-                        Divider(color: Colors.white, height: 30),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              buildedswitch("hour"),
-                              SizedBox(
-                                width: 250,
-                                child: Inputs().text(
-                                    'التذكير بالتدابير الوقائية كل ساعة   ',
-                                    20),
+                            Column(children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  buildedswitch('desactiveall', "activeall", 0),
+                                  Texts().text('تعطيل الكل', 20),
+                                ],
                               )
                             ]),
-                        Divider(),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              buildedswitch('day'),
-                              SizedBox(
-                                width: 250,
-                                child: Inputs().text(
-                                    '      التذكير بالتدابير الوقائية مرة واحدة كل يوم',
-                                    20),
+                            Column(children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  buildedswitch('activeall', 'desactiveall', 0),
+                                  Texts().text('تفعيل الكل', 20),
+                                ],
                               )
                             ]),
-                        Divider(),
-                        Row(
-                          children: <Widget>[],
-                        ),
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              buildedswitch("twohours"),
-                              SizedBox(
-                                width: 250,
-                                child: Inputs().text(
-                                    'التذكير بالتدابير الوقائية مرتين في اليوم ',
-                                    20),
-                              )
-                            ]),
-                        Divider(color: Colors.white, height: 30),
-                      ])),
-            ],
-          )),
-        ));
+                          ]),
+                    ]))));
   }
 
-  FutureBuilder buildedswitch(key) {
+//return a switcher that builded for specific jobs , with a method inside to execute what happen with switcher and change shared values and other switchers results some times
+  FutureBuilder buildedswitch(key, channel, id) {
     return FutureBuilder(
         future: getShared(key),
         initialData: false,
@@ -314,7 +318,44 @@ class _NotificationsettingsState extends State<Notificationsettings> {
             onChanged: (value) {
               putShared(key, value);
               setState(() {
-                smartnotificationcall(key);
+                if (id > 0) {
+                  var message, title;
+                  if (value == true) {
+                    if (channel == "clean") {
+                      message =
+                          "لاتنسى الحفاظ على النظافة والالتزام بغسل اليدين كل 15 دقيقة";
+                      title = "من الضروري غسل اليدين";
+                      _scheduleNotification2(
+                          id, channel, channel, title, message);
+                    }
+                    if (channel == "eat") {
+                      message = "لاتاكل قبل غسل يديك و التاكد من سلامة الطعام";
+                      title = "انتبه فالفيروسات قد تتسلل مع الطعام";
+                      _scheduleNotification2(
+                          id, channel, channel, title, message);
+                    }
+                    if (channel == "getout") {
+                      message =
+                          "قبل الخروج من البيت تاكد من وضعك الكمامة واحترام مسافة الامان وعدم الاختلاط بالاخرين";
+                      title =
+                          "اتخد جميع التدابير اللازمة قبل خروجك من البيت وحافظ على سلامة مجتمعك";
+                      _scheduleNotification2(
+                          id, channel, channel, title, message);
+                    }
+                    if (channel == "sport") {
+                      message =
+                          "حافظ على ممارستك لنشاطك الرياضي من البيت ولاتعرض نفسك والاخرين للخطر";
+                      title =
+                          "الرياضة اخلاق طبقها اليوم وتمرن في البيت باي وسيلة واحمي غيرك";
+                      _scheduleNotification2(
+                          id, channel, channel, title, message);
+                    }
+                    //print('we start shedule in channel '+channel);
+                  } else {
+                    _cancelNotifications(id, channel);
+                    //   print('we cancel notif in channle '+channel);
+                  }
+                }
               });
             },
             activeTrackColor: Colors.lightGreenAccent,
@@ -323,59 +364,61 @@ class _NotificationsettingsState extends State<Notificationsettings> {
         });
   }
 
-// data store on  shared refernce
-
+//give a new values from swotchers to the stored keys when user change it with some other logic for the rest of switchers
   void putShared(String key, bool val) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    if (key == "hour" && val == true) {
-      putShared("day", false);
-      putShared("twohours", false);
-      _cancelNotifications(1);
-      _cancelNotifications(2);
-      _cancelNotifications(4);
+    if (key == "activeall" && val == true) {
+      prefs.setBool('desactiveall', false);
+      makeonrchange(true);
+      _cancelallNotifications();
+      print("active all");
     }
-    if (key == "hour" && val == false) {
-      _cancelNotifications(3);
-    }
-
-    if (key == "twohours" && val == true) {
-      putShared("day", false);
-      putShared("hour", false);
-      _cancelNotifications(3);
-      _cancelNotifications(4);
-    }
-    if (key == "twohours" && val == false) {
-      _cancelNotifications(1);
-      _cancelNotifications(2);
+    if (key == "activeall" && val == false) {
+      prefs.setBool('desactiveall', true);
     }
 
-    if (key == "day" && val == true) {
-      putShared("towhours", false);
-      putShared("hour", false);
-      _cancelNotifications(1);
-      _cancelNotifications(2);
-      _cancelNotifications(3);
+    if (key == "desactiveall" && val == true) {
+      prefs.setBool('activeall', false);
+      makeonrchange(false);
+      _cancelallNotifications();
+      print("desactive all");
     }
-    if (key == "twohours" && val == false) {
-      _cancelNotifications(4);
+    if (key == "desactiveall" && val == false) {
+      prefs.setBool('activeall', true);
     }
+
+    if ((key != "desactiveall" || key != 'activeall')) {
+      prefs.setBool('activeall', false);
+      prefs.setBool('desactiveall', false);
+    }
+
     prefs.setBool(key, val);
   }
 
+// return the value of each key (string) in bool when user drag the switcher and store it
   Future getShared(String key) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool val = prefs.getBool(key) == null ? false : (prefs.getBool(key));
     return val;
   }
 
-//--------------------------
-// set up a notification/s
+//return one value to all single switchers
+  void makeonrchange(anser) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('clean', anser);
+    prefs.setBool('eat', anser);
+    prefs.setBool('sport', anser);
+    prefs.setBool('getout', anser);
+  }
 
-  Future<void> _cancelNotifications(id) async {
+//--------------------------
+// cancel notification defined by id
+  Future<void> _cancelNotifications(id, chanelname) async {
     await flutterLocalNotificationsPlugin.cancel(id);
   }
 
+//void to cancel all notification by id with one click
   Future<void> _cancelallNotifications() async {
     await flutterLocalNotificationsPlugin.cancel(1);
     await flutterLocalNotificationsPlugin.cancel(2);
@@ -383,83 +426,67 @@ class _NotificationsettingsState extends State<Notificationsettings> {
     await flutterLocalNotificationsPlugin.cancel(4);
   }
 
-//start onfiguring a notification
+  //notification method with a hourly interval
+  Future<void> _scheduleNotification2(
+      id, channel, idchannel, title, message) async {
+    print('got ' + channel);
+    var groupKey = 'com.android.example.WORK_EMAIL';
+    var groupChannelId = 'mygroupchannel';
+    var groupChannelName = 'taw3iya';
+    var groupChannelDescription = 'taw3iya project';
 
-  Future<void> notificationforhour(id) async {
-    var element = elements();
+    var vibrationPattern = Int64List(4);
+    vibrationPattern[0] = 0;
+    vibrationPattern[1] = 1000;
+    vibrationPattern[2] = 5000;
+    vibrationPattern[3] = 2000;
 
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      "id" + element,
-      element,
-      'your other channel description',
-      icon: '@mipmap/ic_launcher',
-      importance: Importance.Max,
-      priority: Priority.High,
-      ongoing: true,
-      autoCancel: false,
-      sound: RawResourceAndroidNotificationSound(element),
-      largeIcon: DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
-      enableLights: true,
-      color: const Color.fromARGB(255, 255, 0, 0),
-      ledColor: const Color.fromARGB(255, 255, 0, 0),
-      ledOnMs: 1000,
-      ledOffMs: 500,
-    );
-    var iOSPlatformChannelSpecifics =
-        IOSNotificationDetails(sound: element + ".wav");
-    var platformChannelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.periodicallyShow(
-        id,
-        element,
-        "المرجو الالتزام بالتدابير الوقائية للحفاظ على سلامتكم",
-        RepeatInterval.EveryMinute,
-        platformChannelSpecifics,
-        payload: element);
-  }
-  ////// Sport
-
-  Future<void> notificationforday(id, hour) async {
-    var element = elements();
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        "id", element, 'your other channel description',
+        groupChannelId, groupChannelName, groupChannelDescription,
+        groupKey: groupKey,
         icon: '@mipmap/ic_launcher',
-        importance: Importance.Max,
+        importance: Importance.High,
         priority: Priority.High,
         ongoing: true,
         autoCancel: false,
-        sound: RawResourceAndroidNotificationSound(element),
+        sound: RawResourceAndroidNotificationSound(channel),
         largeIcon: DrawableResourceAndroidBitmap('@mipmap/ic_launcher'),
+        //styleInformation:bigPictureStyleInformation,
+        vibrationPattern: vibrationPattern,
         enableLights: true,
         color: const Color.fromARGB(255, 255, 0, 0),
         ledColor: const Color.fromARGB(255, 255, 0, 0),
         ledOnMs: 1000,
-        ledOffMs: 500);
+        ledOffMs: 500,
+        timeoutAfter: 20000);
     var iOSPlatformChannelSpecifics =
-        IOSNotificationDetails(sound: element + ".wav");
+        IOSNotificationDetails(sound: channel + ".wav");
     var platformChannelSpecifics = NotificationDetails(
         androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.showDailyAtTime(
-        id,
-        element,
-        "المرجو الالتزام بالتدابير الوقائية للحفاظ على سلامتكم",
-        Time(hour, 00, 00),
-        platformChannelSpecifics,
-        payload: element);
-  }
-
-  /////////////////////////////////////////////////////////////
-  Future<void> smartnotificationcall(channelname) async {
-    if (channelname == "twohours") {
-      notificationforday(1, 10);
-      notificationforday(2, 18);
+    if (channel == 'clean' || channel == "getout") {
+      await flutterLocalNotificationsPlugin.periodicallyShow(
+          id, title, message, RepeatInterval.Hourly, platformChannelSpecifics,
+          payload: channel);
     }
-    if (channelname == "hour") {
-      notificationforhour(3);
+    if (channel == "eat") {
+      await flutterLocalNotificationsPlugin.showDailyAtTime(
+          id, title, message, Time(13, 0, 0), platformChannelSpecifics,
+          payload: channel);
+      await flutterLocalNotificationsPlugin.showDailyAtTime(
+          id, title, message, Time(20, 0, 0), platformChannelSpecifics,
+          payload: channel);
     }
-    if (channelname == "day") {
-      notificationforday(4, 12);
+    if (channel == 'sport') {
+      await flutterLocalNotificationsPlugin.showDailyAtTime(
+          id, title, message, Time(10, 0, 0), platformChannelSpecifics,
+          payload: channel);
+      await flutterLocalNotificationsPlugin.showDailyAtTime(
+          id, title, message, Time(18, 0, 0), platformChannelSpecifics,
+          payload: channel);
     }
+    setState(() {
+      $payload = channel;
+    });
   }
 }
 
@@ -474,6 +501,8 @@ class SecondScreen extends StatefulWidget {
 
 class SecondScreenState extends State<SecondScreen> {
   String _payload;
+  int count = 0;
+  var pics = [];
   @override
   void initState() {
     super.initState();
@@ -481,21 +510,94 @@ class SecondScreenState extends State<SecondScreen> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF243953),
-        elevation: 0.0,
-        title: Center(
-          child: Text('لأجل سلامتنا جميعآ'),
-        ),
-      ),
+      backgroundColor: Color(0XFF243953),
       body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        color: Color(0xFF243953),
-        child: Center(child: Image.asset('assets/' + _payload + '.jpg')),
+        child: Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image.asset(
+              'assets/' + _payload + '.jpg',
+              height: 630,
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    RaisedButton(
+                      onPressed: () => navigation(" السابق"),
+                      child: Row(
+                        children: <Widget>[
+                          Icon(Icons.arrow_left),
+                          Text("Back"),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    RaisedButton(
+                      onPressed: () => navigation(" التالي"),
+                      child: Row(
+                        children: <Widget>[
+                          Text('Next'),
+                          Icon(Icons.arrow_right),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            )
+          ],
+        )),
       ),
     );
+  }
+
+  void navigation(name) {
+    if (name == "back") {
+      setState(() {
+        count--;
+        if (count < 0) {
+          count = 3;
+        }
+      });
+    }
+    if (name == "next") {
+      setState(() {
+        count++;
+        if (count > 3) {
+          count = 0;
+        }
+      });
+    }
+
+    setState(() {
+      if (count == 0) {
+        _payload = "clean";
+      }
+      if (count == 1) {
+        _payload = "eat";
+      }
+      if (count == 2) {
+        _payload = "getout";
+      }
+      if (count == 3) {
+        _payload = "sport";
+      }
+    });
   }
 }

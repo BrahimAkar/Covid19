@@ -30,7 +30,7 @@ class RaisedButtonHome extends StatelessWidget {
                 child: Text(
                   text,
                   style: TextStyle(
-                      color: Colors.white, fontSize: 15, fontFamily: 'Questv'),
+                      color: Colors.white, fontSize: 17, fontFamily: 'Questv'),
                 ),
               )
             ],

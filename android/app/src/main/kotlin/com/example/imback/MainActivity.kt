@@ -1,4 +1,4 @@
-package com.example.imback
+package com.sensibilisation19.app
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

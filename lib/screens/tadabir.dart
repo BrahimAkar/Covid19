@@ -61,7 +61,8 @@ class Tadabir extends StatelessWidget {
               SizedBox(
                 height: 9,
               ),
-              CardTadabir(fifthCard, _stops, texts[4], null, "/medical"),
+              CardTadabir(
+                  fifthCard, _stops, texts[4], null, "/addnewmedicalfile"),
               SizedBox(
                 height: 9,
               ),
