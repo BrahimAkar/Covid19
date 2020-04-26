@@ -1,0 +1,56 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:imback/theme.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+class AppSettings extends StatefulWidget {
+  @override
+  _AppSettingsState createState() => _AppSettingsState();
+}
+
+class _AppSettingsState extends State<AppSettings> {
+  bool isTrue = true;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text('الإعدادات'),
+      ),
+      body: Column(
+        children: <Widget>[
+          Consumer<ThemeNotifier>(
+            builder: (context, ThemeNotifier notifier, child) {
+              return Container(
+                padding: EdgeInsets.all(22),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        CupertinoSwitch(
+                          value: notifier.isDark,
+                          onChanged: (value) {
+                            notifier.toggleTheme();
+                          },
+                          activeColor: Colors.green,
+                        ),
+                        Text(
+                          'الوضع الليلي',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
+                    Divider(),
+                  
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}

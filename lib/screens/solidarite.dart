@@ -29,14 +29,17 @@ class Solidarite extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF243953),
-        elevation: 0.0,
-        title: Center(
-          child: Text('التضامن         '),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        centerTitle: true,
+        iconTheme: IconThemeData(color: Theme.of(context).accentColor),
+        elevation: 1,
+        title: Text(
+          'التضامن',
+          style: TextStyle(fontSize: 18, color: Theme.of(context).accentColor),
         ),
       ),
       body: Container(
-        color: Color(0xFF243953),
+        color: Theme.of(context).scaffoldBackgroundColor,
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(

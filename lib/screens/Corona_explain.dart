@@ -17,12 +17,18 @@ class _CoronaExplainState extends State<CoronaExplain> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF243953),
-        elevation: 0.0,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        centerTitle: true,
+        iconTheme: IconThemeData(color: Theme.of(context).accentColor),
+        elevation: 1,
         leading: GestureDetector(
             onTap: () => Navigator.pop(context),
             child: Icon(Icons.arrow_back_ios)),
-        title: Center(child: Text('تعرف اكثر على فيروس كورونا')),
+        title: Center(
+            child: Text(
+          'تعرف اكثر على فيروس كورونا',
+          style: TextStyle(fontSize: 18, color: Theme.of(context).accentColor),
+        )),
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.all(11.0),
@@ -32,12 +38,10 @@ class _CoronaExplainState extends State<CoronaExplain> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          color: Color(0xFF243953),
+          color: Theme.of(context).scaffoldBackgroundColor,
           child: Column(
             children: <Widget>[
-              SizedBox(
-                height: 80,
-              ),
+             
               Container(
                 height: 250,
                 width: MediaQuery.of(context).size.width,
@@ -57,7 +61,10 @@ class _CoronaExplainState extends State<CoronaExplain> {
                         padding: EdgeInsets.only(bottom: 35),
                         child: Text(
                           'فيروس كورونا\n  المستجد',
-                          style: TextStyle(fontSize: 45, color: Colors.white),
+                          style: TextStyle(
+                            fontSize: 45,
+                            color: Theme.of(context).accentColor,
+                          ),
                           textAlign: TextAlign.right,
                         ),
                       ),
@@ -73,7 +80,8 @@ class _CoronaExplainState extends State<CoronaExplain> {
                   children: <Widget>[
                     Text(
                       'أعراض الإصابة',
-                      style: TextStyle(color: Colors.white, fontSize: 28),
+                      style: TextStyle(
+                          color: Theme.of(context).accentColor, fontSize: 28),
                     ),
                   ],
                 ),
@@ -162,7 +170,8 @@ class _CoronaExplainState extends State<CoronaExplain> {
                   children: <Widget>[
                     Text(
                       'نصائح للوقاية',
-                      style: TextStyle(color: Colors.white, fontSize: 28),
+                      style: TextStyle(
+                          color: Theme.of(context).accentColor, fontSize: 28),
                     )
                   ],
                 ),
@@ -252,7 +261,8 @@ class _CoronaExplainState extends State<CoronaExplain> {
                   children: <Widget>[
                     Text(
                       'كيف ينتشر مرض كوفيد-19؟',
-                      style: TextStyle(color: Colors.white, fontSize: 28),
+                      style: TextStyle(
+                          color: Theme.of(context).accentColor, fontSize: 28),
                     )
                   ],
                 ),
@@ -293,7 +303,8 @@ class _CoronaExplainState extends State<CoronaExplain> {
                   children: <Widget>[
                     Text(
                       'هل يمكن أن ينتقل عبر الهواء؟',
-                      style: TextStyle(color: Colors.white, fontSize: 28),
+                      style: TextStyle(
+                          color: Theme.of(context).accentColor, fontSize: 28),
                     )
                   ],
                 ),
@@ -333,7 +344,8 @@ class _CoronaExplainState extends State<CoronaExplain> {
                   children: <Widget>[
                     Text(
                       'هل يمكن أن يصاب المرء بالمرض  \n عن طريق شخص عديم الأعراض؟',
-                      style: TextStyle(color: Colors.white, fontSize: 28),
+                      style: TextStyle(
+                          color: Theme.of(context).accentColor, fontSize: 28),
                     )
                   ],
                 ),
@@ -374,7 +386,8 @@ class _CoronaExplainState extends State<CoronaExplain> {
                   children: <Widget>[
                     Text(
                       'ما هي احتمالات إصابتي',
-                      style: TextStyle(color: Colors.white, fontSize: 28),
+                      style: TextStyle(
+                          color: Theme.of(context).accentColor, fontSize: 28),
                     )
                   ],
                 ),
@@ -422,7 +435,9 @@ class _CoronaExplainState extends State<CoronaExplain> {
                         ),
                         Text(
                           'سيتم تحديث محتوى الصفحة في وقت لاحق..',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(
+                            color: Theme.of(context).accentColor,
+                          ),
                         ),
                         SizedBox(
                           height: 20,

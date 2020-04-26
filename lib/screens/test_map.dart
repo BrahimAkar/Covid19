@@ -11,14 +11,20 @@ class _TestMapState extends State<TestMap> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF243953),
+        iconTheme: IconThemeData(color: Theme.of(context).accentColor),
+        centerTitle: true,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0.0,
-        title: Center(child: Text('التدابير الوقائية         ')),
+        title: Text(
+          'التدابير الوقائية',
+          style: TextStyle(
+            color: Theme.of(context).accentColor,
+          ),
+        ),
       ),
       body: WebView(
         initialUrl: "https://covidata.2m.ma/#/ar/news",
         javascriptMode: JavascriptMode.unrestricted,
-        
       ),
     );
   }

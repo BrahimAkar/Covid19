@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:imback/widgets/cardTadabir.dart';
+import 'package:provider/provider.dart';
+import 'package:imback/theme.dart';
 
 class Tadabir extends StatelessWidget {
   List<Color> firstCard = [Color(0xffCF5AEF), Color(0xffFE3258)];
@@ -29,51 +31,59 @@ class Tadabir extends StatelessWidget {
   List<double> _stops = [0, 0.5];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF243953),
-        elevation: 0.0,
-        title: Center(child: Text('التدابير الوقائية         ')),
-      ),
-      body: Container(
-        color: Color(0xFF243953),
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              SizedBox(
-                height: 35,
-              ),
-              CardTadabir(firstCard, _stops, texts[0], pageLinks[0], null),
-              SizedBox(
-                height: 9,
-              ),
-              CardTadabir(secondCard, _stops, texts[1], pageLinks[1], null),
-              SizedBox(
-                height: 9,
-              ),
-              CardTadabir(thirdard, _stops, texts[2], pageLinks[2], ""),
-              SizedBox(
-                height: 9,
-              ),
-              CardTadabir(fourthCard, _stops, texts[3], null, "/allimages"),
-              SizedBox(
-                height: 9,
-              ),
-              CardTadabir(
-                  fifthCard, _stops, texts[4], null, "/addnewmedicalfile"),
-              SizedBox(
-                height: 9,
-              ),
-              CardTadabir(sixthCard, _stops, texts[5], null, "/testmap"),
-              SizedBox(
-                height: 9,
-              ),
-            ],
+    return Consumer<ThemeNotifier>(
+        builder: (context, ThemeNotifier notifier, child) {
+      return Scaffold(
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Theme.of(context).accentColor),
+          centerTitle: true,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          elevation: notifier.isDark ? 0 : 1,
+          title: Text('التدابير الوقائية',
+              style: TextStyle(
+                color: Theme.of(context).accentColor,
+              )),
+        ),
+        body: Container(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 35,
+                ),
+                CardTadabir(firstCard, _stops, texts[0], pageLinks[0], null),
+                SizedBox(
+                  height: 9,
+                ),
+                CardTadabir(secondCard, _stops, texts[1], pageLinks[1], null),
+                SizedBox(
+                  height: 9,
+                ),
+                CardTadabir(thirdard, _stops, texts[2], pageLinks[2], ""),
+                SizedBox(
+                  height: 9,
+                ),
+                CardTadabir(fourthCard, _stops, texts[3], null, "/allimages"),
+                SizedBox(
+                  height: 9,
+                ),
+                CardTadabir(
+                    fifthCard, _stops, texts[4], null, "/addnewmedicalfile"),
+                SizedBox(
+                  height: 9,
+                ),
+                CardTadabir(sixthCard, _stops, texts[5], null, "/testmap"),
+                SizedBox(
+                  height: 9,
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

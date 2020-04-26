@@ -5,8 +5,15 @@ class AllImages extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Color(0xff1b3b54),
-          title: Center(child: Text('التدابير الوقائية        '))),
+          centerTitle: true,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          iconTheme: IconThemeData(color: Theme.of(context).accentColor),
+          title: Text(
+            'التدابير الوقائية',
+            style: TextStyle(
+              color: Theme.of(context).accentColor,
+            ),
+          )),
       body: Container(
         child: SingleChildScrollView(
           child: Column(
