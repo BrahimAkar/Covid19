@@ -24,7 +24,7 @@ class RaisedButtonHome extends StatelessWidget {
             children: <Widget>[
               Image.asset('assets/images/$img.png', scale: 4),
               SizedBox(
-                width: 25,
+                width: 18,
               ),
               Center(
                 child: Text(

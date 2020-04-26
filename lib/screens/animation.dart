@@ -56,9 +56,8 @@ class _MyAnimationState extends State<MyAnimation> {
                         elevation: 0,
                         color: Colors.redAccent,
                         padding: EdgeInsets.all(15),
-                        onPressed: () => {
-                          Navigator.pushNamed(context, '/homescreen'),
-                        },
+                        onPressed: () =>
+                            Navigator.pushNamed(context, '/homescreen'),
                         child: Text(
                           'متابعة',
                           style: TextStyle(

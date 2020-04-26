@@ -32,12 +32,15 @@ class MiddleCard extends StatelessWidget {
                             width: 41,
                           ),
                           Center(
-                            child: Text(
-                              'التضامن',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17,
-                                  fontFamily: 'Questv'),
+                            child: Padding(
+                              padding: EdgeInsets.only(right: 11),
+                              child: Text(
+                                ' التضامن',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 17,
+                                    fontFamily: 'Questv'),
+                              ),
                             ),
                           )
                         ],
@@ -70,7 +73,7 @@ class MiddleCard extends StatelessWidget {
               direction: Axis.horizontal, // main axis (rows or columns)
               children: <Widget>[
                 RaisedButtonHome(
-                    ' التنبيه التلقائي ', 'tanbih', '/notification'),
+                    'التنبيه التلقائي  ', 'tanbih', '/notification'),
                 RaisedButtonHome('أرقام الطوارئ   ', 'tawari', '/sos'),
               ],
             ),

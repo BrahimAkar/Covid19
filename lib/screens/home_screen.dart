@@ -128,25 +128,8 @@ class _HomeScreenState extends State<HomeScreen>
                                       style: textStyle,
                                     ),
                                     onTap: () => {
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              title: Text(
-                                                  "تواصل معنا عبر الهاتف او الواتساب"),
-                                              content: Text(
-                                                '0669743300\n0669743300',
-                                              ),
-                                              actions: [
-                                                FlatButton(
-                                                  child: Text("OK"),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                )
-                                              ],
-                                            );
-                                          })
+                                      launch(
+                                          'mailto:contact@sensibilisation19.com')
                                     },
                                     trailing: Icon(
                                       Icons.phone,
