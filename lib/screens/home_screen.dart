@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:imback/widgets/bottomCard.dart';
-import 'package:imback/widgets/middleCard.dart';
+import 'package:covid19/widgets/bottomCard.dart';
+import 'package:covid19/widgets/middleCard.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:lottie/lottie.dart';

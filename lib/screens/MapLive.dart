@@ -4,8 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:imback/widgets/mapCard.dart';
-import 'package:imback/classes/Corona.dart';
+import 'package:covid19/widgets/mapCard.dart';
+import 'package:covid19/classes/Corona.dart';
 import 'package:provider/provider.dart';
 
 import '../theme.dart';

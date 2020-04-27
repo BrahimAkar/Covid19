@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:imback/widgets/cardTadabir.dart';
+import 'package:covid19/widgets/cardTadabir.dart';
 import 'package:provider/provider.dart';
-import 'package:imback/theme.dart';
+import 'package:covid19/theme.dart';
 
 class Tadabir extends StatelessWidget {
   List<Color> firstCard = [Color(0xffCF5AEF), Color(0xffFE3258)];

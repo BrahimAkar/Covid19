@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:imback/models/databaseHelper.dart';
-import 'package:imback/models/fileMedical.dart';
-import 'package:imback/models/user.dart';
+import 'package:covid19/models/databaseHelper.dart';
+import 'package:covid19/models/fileMedical.dart';
+import 'package:covid19/models/user.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
 

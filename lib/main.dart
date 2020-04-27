@@ -3,21 +3,21 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:imback/classes/changeTheme.dart';
+import 'package:covid19/classes/changeTheme.dart';
 
-import 'package:imback/screens/Corona_explain.dart';
-import 'package:imback/screens/addNewMedicalFile.dart';
-import 'package:imback/screens/all_Images.dart';
-import 'package:imback/screens/animation.dart';
-import 'package:imback/screens/notification-guid.dart';
+import 'package:covid19/screens/Corona_explain.dart';
+import 'package:covid19/screens/addNewMedicalFile.dart';
+import 'package:covid19/screens/all_Images.dart';
+import 'package:covid19/screens/animation.dart';
+import 'package:covid19/screens/notification-guid.dart';
 
-import 'package:imback/screens/solidarite.dart';
-import 'package:imback/screens/sos.dart';
-import 'package:imback/screens/settings.dart';
-import 'package:imback/screens/tadabir.dart';
-import 'package:imback/screens/test_map.dart';
-import 'package:imback/widgets/text.dart';
-import 'package:imback/widgets/iconbutton.dart';
+import 'package:covid19/screens/solidarite.dart';
+import 'package:covid19/screens/sos.dart';
+import 'package:covid19/screens/settings.dart';
+import 'package:covid19/screens/tadabir.dart';
+import 'package:covid19/screens/test_map.dart';
+import 'package:covid19/widgets/text.dart';
+import 'package:covid19/widgets/iconbutton.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'theme.dart';
@@ -36,6 +36,7 @@ class ReceivedNotification {
 
   ReceivedNotification({
     @required this.id,
+
     @required this.title,
     @required this.body,
     @required this.payload,
@@ -206,6 +207,7 @@ class _NotificationsettingsState extends State<Notificationsettings> {
                 Navigator.of(context, rootNavigator: true).pop();
                 await Navigator.push(
                     context,
+
                     MaterialPageRoute(
                         builder: (BuildContext context) =>
                             SecondScreen($payload)));

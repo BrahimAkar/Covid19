@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:imback/widgets/cardTadabir.dart';
+import 'package:covid19/widgets/cardTadabir.dart';
 
 class Solidarite extends StatelessWidget {
   List<Color> firstCard = [Color(0xffCF5AEF), Color(0xffFE3258)];
