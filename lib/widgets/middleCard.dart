@@ -73,9 +73,10 @@ class MiddleCard extends StatelessWidget {
               runSpacing: 20, // gap between lines
               direction: Axis.horizontal, // main axis (rows or columns)
               children: <Widget>[
+                RaisedButtonHome(getTranslated(context, "tanbih"), 'tanbih',
+                    '/notification'),
                 RaisedButtonHome(
-                    getTranslated(context, "tanbih"), 'tanbih', '/notification'),
-                RaisedButtonHome(getTranslated(context, "tawari"), 'tawari', '/sos'),
+                    getTranslated(context, "emergency"), 'tawari', '/sos'),
               ],
             ),
           ],

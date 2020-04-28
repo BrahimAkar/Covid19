@@ -1,3 +1,4 @@
+import 'package:covid19/localization/localization_constants.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:covid19/models/databaseHelper.dart';
@@ -46,7 +47,7 @@ class _AddNewMedicalFileState extends State<AddNewMedicalFile> {
             elevation: 1,
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             title: Text(
-              'الملف الطبي',
+              getTranslated(context, "medicalFileAppBarTitle"),
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: Theme.of(context).accentColor,
@@ -64,11 +65,11 @@ class _AddNewMedicalFileState extends State<AddNewMedicalFile> {
                   key: _formKey,
                   child: SingleChildScrollView(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         SizedBox(height: 80),
                         Text(
-                          'رقم الملف الطبي',
+                          getTranslated(context, "medicalFileNum"),
                           textAlign: TextAlign.right,
                           style: TextStyle(color: textsColor, fontSize: 19),
                         ),
@@ -78,244 +79,151 @@ class _AddNewMedicalFileState extends State<AddNewMedicalFile> {
                             primaryColor: Colors.redAccent,
                             primaryColorDark: Colors.red,
                           ),
-                          child: Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: TextFormField(
-                              style: TextStyle(color: getColor()),
-                              textAlignVertical: TextAlignVertical.center,
-                              validator: (value) {
-                                if (value.isEmpty) {
-                                  return 'من فضلك، ادخل رقم الملف الطبي';
-                                }
-                                return null;
-                              },
-                              onSaved: (String value) {
-                                fileNumber = value;
-                              },
-
-                              // textDirection: TextDirection.rtl,
-                              decoration: InputDecoration(
-                                suffixIcon: Icon(
-                                  Icons.check_circle,
-                                  size: 29,
-                                  color: Colors.blue,
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color(0xff1C95FF), width: 1.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color(0xff1C95FF), width: 1.0),
-                                ),
-                                hintText: 'مثال 808556',
-                                hintStyle: TextStyle(
-                                  color: getColor(),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 15),
-                        Text(
-                          'هل تعاني من مرض مزمن؟',
-                          textAlign: TextAlign.right,
-                          style: TextStyle(color: textsColor, fontSize: 19),
-                        ),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            Text(
-                              'نعم',
-                              style: TextStyle(color: textsColor, fontSize: 18),
-                            ),
-                            Radio(
-                              autofocus: true,
-                              activeColor: Colors.blue,
-                              value: 1,
-                              groupValue: disease,
-                              onChanged: (t) {
-                                setState(() {
-                                  disease = t;
-                                });
-                              },
-                            ),
-                            Text(
-                              'لا',
-                              style: TextStyle(color: textsColor, fontSize: 18),
-                            ),
-                            Radio(
-                              activeColor: Colors.blue,
-                              value: 0,
-                              groupValue: disease,
-                              onChanged: (t) {
-                                setState(() {
-                                  disease = t;
-                                });
-                              },
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 15),
-                        // الحساسية
-                        Text(
-                          'هل تعاني من حساسية؟',
-                          textAlign: TextAlign.right,
-                          style: TextStyle(color: textsColor, fontSize: 19),
-                        ),
-
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            Text(
-                              'نعم',
-                              style: TextStyle(color: textsColor, fontSize: 18),
-                            ),
-                            Radio(
-                              autofocus: true,
-                              activeColor: Colors.blue,
-                              value: 1,
-                              groupValue: sensitivity,
-                              onChanged: (t) {
-                                setState(() {
-                                  sensitivity = t;
-                                });
-                              },
-                            ),
-                            Text(
-                              'لا',
-                              style: TextStyle(color: textsColor, fontSize: 18),
-                            ),
-                            Radio(
-                              activeColor: Colors.blue,
-                              value: 0,
-                              groupValue: sensitivity,
-                              onChanged: (t) {
-                                setState(() {
-                                  sensitivity = t;
-                                });
-                              },
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 15),
-                        // الحساسية
-                        Text(
-                          'ماهي فصيلة الدم الخاصة بك؟',
-                          textAlign: TextAlign.right,
-                          style: TextStyle(color: textsColor, fontSize: 19),
-                        ),
-                        SizedBox(height: 15),
-                        Theme(
-                          data: new ThemeData(
-                            primaryColor: Colors.redAccent,
-                            primaryColorDark: Colors.red,
-                          ),
-                          child: Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: TextFormField(
-                              style: TextStyle(color: textsColor),
-                              validator: (value) {
-                                if (value.isEmpty) {
-                                  return 'من فضلك أدخل فصيلة دمك';
-                                }
-                                return null;
-                              },
-                              onSaved: (String value) {
-                                bloodType = value;
-                              },
-                              decoration: InputDecoration(
-                                errorStyle: TextStyle(
-                                  fontFamily: "Questv",
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color(0xff1C95FF), width: 1.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color(0xff1C95FF), width: 1.0),
-                                ),
-                                hintText: 'مثال : O+',
-                                hintStyle: TextStyle(
-                                  color: getColor(),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 15),
-                        // الحساسية
-                        Text(
-                          'كم وزنك؟',
-                          textAlign: TextAlign.right,
-                          style: TextStyle(color: textsColor, fontSize: 19),
-                        ),
-                        SizedBox(height: 15),
-                        Theme(
-                          data: new ThemeData(
-                            primaryColor: Colors.redAccent,
-                            primaryColorDark: Colors.red,
-                          ),
-                          child: Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: TextFormField(
-                              validator: (value) {
-                                if (value.isEmpty) {
-                                  return 'من فضلك، ادخل الوزن';
-                                }
-                                return null;
-                              },
-                              onSaved: (String value) {
-                                weight = value;
-                              },
-                              textAlign: TextAlign.right,
-                              decoration: InputDecoration(
-                                errorStyle: TextStyle(
-                                  fontFamily: "Questv",
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color(0xff1C95FF), width: 1.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Color(0xff1C95FF), width: 1.0),
-                                ),
-                                hintText: ' مثال: 85 كيلوغرام',
-                                hintStyle: TextStyle(
-                                  color: getColor(),
-                                ),
-                              ),
-                              keyboardType: TextInputType.number,
-                              minLines: 1,
-                              style: TextStyle(color: getColor()),
-                              textDirection: TextDirection.rtl,
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 15),
-                        // الحساسية
-                        Text(
-                          'كم عمرك؟',
-                          textAlign: TextAlign.right,
-                          style: TextStyle(color: textsColor, fontSize: 19),
-                        ),
-                        SizedBox(height: 15),
-                        Directionality(
-                          textDirection: TextDirection.rtl,
                           child: TextFormField(
+                            style: TextStyle(color: getColor()),
                             textAlignVertical: TextAlignVertical.center,
-                            textAlign: TextAlign.right,
                             validator: (value) {
                               if (value.isEmpty) {
-                                return 'من فضلك، ادخل العمر';
+                                return getTranslated(
+                                    context, "medicalFileNumError");
                               }
                               return null;
                             },
                             onSaved: (String value) {
-                              age = value;
+                              fileNumber = value;
+                            },
+
+                            // textDirection: TextDirection.rtl,
+                            decoration: InputDecoration(
+                              suffixIcon: Icon(
+                                Icons.check_circle,
+                                size: 29,
+                                color: Colors.blue,
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(0xff1C95FF), width: 1.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(0xff1C95FF), width: 1.0),
+                              ),
+                              hintText:
+                                  getTranslated(context, "medicalFileNumHint"),
+                              hintStyle: TextStyle(
+                                color: getColor(),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        Text(
+                          getTranslated(context, "medicalFilediseaseTitle"),
+                          textAlign: TextAlign.right,
+                          style: TextStyle(color: textsColor, fontSize: 19),
+                        ),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              getTranslated(context, "medicalFilediseaseYES"),
+                              style: TextStyle(color: textsColor, fontSize: 18),
+                            ),
+                            Radio(
+                              autofocus: true,
+                              activeColor: Colors.blue,
+                              value: 1,
+                              groupValue: disease,
+                              onChanged: (t) {
+                                setState(() {
+                                  disease = t;
+                                });
+                              },
+                            ),
+                            Text(
+                              getTranslated(context, "medicalFilediseaseNO"),
+                              style: TextStyle(color: textsColor, fontSize: 18),
+                            ),
+                            Radio(
+                              activeColor: Colors.blue,
+                              value: 0,
+                              groupValue: disease,
+                              onChanged: (t) {
+                                setState(() {
+                                  disease = t;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 15),
+                        // الحساسية
+                        Text(
+                          getTranslated(context, "medicalFilesensitivityTitle"),
+                          textAlign: TextAlign.right,
+                          style: TextStyle(color: textsColor, fontSize: 19),
+                        ),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              getTranslated(
+                                  context, "medicalFilesensitivityYES"),
+                              style: TextStyle(color: textsColor, fontSize: 18),
+                            ),
+                            Radio(
+                              autofocus: true,
+                              activeColor: Colors.blue,
+                              value: 1,
+                              groupValue: sensitivity,
+                              onChanged: (t) {
+                                setState(() {
+                                  sensitivity = t;
+                                });
+                              },
+                            ),
+                            Text(
+                              getTranslated(
+                                  context, "medicalFilesensitivityNO"),
+                              style: TextStyle(color: textsColor, fontSize: 18),
+                            ),
+                            Radio(
+                              activeColor: Colors.blue,
+                              value: 0,
+                              groupValue: sensitivity,
+                              onChanged: (t) {
+                                setState(() {
+                                  sensitivity = t;
+                                });
+                              },
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 15),
+                        // الحساسية
+                        Text(
+                          getTranslated(context, "medicalFileBloodTypeTitle"),
+                          style: TextStyle(color: textsColor, fontSize: 19),
+                        ),
+                        SizedBox(height: 15),
+                        Theme(
+                          data: new ThemeData(
+                            primaryColor: Colors.redAccent,
+                            primaryColorDark: Colors.red,
+                          ),
+                          child: TextFormField(
+                            style: TextStyle(color: textsColor),
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return getTranslated(
+                                    context, "medicalFileBloodTypError");
+                              }
+                              return null;
+                            },
+                            onSaved: (String value) {
+                              bloodType = value;
                             },
                             decoration: InputDecoration(
                               errorStyle: TextStyle(
@@ -329,7 +237,51 @@ class _AddNewMedicalFileState extends State<AddNewMedicalFile> {
                                 borderSide: BorderSide(
                                     color: Color(0xff1C95FF), width: 1.0),
                               ),
-                              hintText: ' مثال: 25 سنة',
+                              hintText: getTranslated(
+                                  context, "medicalFileBloodTypeHint"),
+                              hintStyle: TextStyle(
+                                color: getColor(),
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 15),
+                        // الحساسية
+                        Text(
+                          getTranslated(context, "medicalFileWeightTitle"),
+                          style: TextStyle(color: textsColor, fontSize: 19),
+                        ),
+                        SizedBox(height: 15),
+                        Theme(
+                          data: new ThemeData(
+                            primaryColor: Colors.redAccent,
+                            primaryColorDark: Colors.red,
+                          ),
+                          child: TextFormField(
+                            validator: (value) {
+                              if (value.isEmpty) {
+                                return getTranslated(
+                                    context, "medicalFileWeightError");
+                              }
+                              return null;
+                            },
+                            onSaved: (String value) {
+                              weight = value;
+                            },
+                            decoration: InputDecoration(
+                              errorStyle: TextStyle(
+                                fontFamily: "Questv",
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(0xff1C95FF), width: 1.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                    color: Color(0xff1C95FF), width: 1.0),
+                              ),
+                              hintText: getTranslated(
+                                  context, "medicalFileWeightHint"),
                               hintStyle: TextStyle(
                                 color: getColor(),
                               ),
@@ -339,6 +291,50 @@ class _AddNewMedicalFileState extends State<AddNewMedicalFile> {
                             style: TextStyle(color: getColor()),
                             textDirection: TextDirection.rtl,
                           ),
+                        ),
+                        SizedBox(height: 15),
+                        // الحساسية
+                        Text(
+                          getTranslated(context, "medicalFileAgeTitle"),
+                         
+                          style: TextStyle(color: textsColor, fontSize: 19),
+                        ),
+                        SizedBox(height: 15),
+                        TextFormField(
+                          textAlignVertical: TextAlignVertical.center,
+                         
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return getTranslated(
+                                  context, "medicalFileAgeError");
+                            }
+                            return null;
+                          },
+                          onSaved: (String value) {
+                            age = value;
+                          },
+                          decoration: InputDecoration(
+                            errorStyle: TextStyle(
+                              fontFamily: "Questv",
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color(0xff1C95FF), width: 1.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color(0xff1C95FF), width: 1.0),
+                            ),
+                            hintText:
+                                getTranslated(context, "medicalFileAgeHint"),
+                            hintStyle: TextStyle(
+                              color: getColor(),
+                            ),
+                          ),
+                          keyboardType: TextInputType.number,
+                          minLines: 1,
+                          style: TextStyle(color: getColor()),
+                          textDirection: TextDirection.rtl,
                         ),
                         SizedBox(
                           height: 18,
@@ -346,47 +342,46 @@ class _AddNewMedicalFileState extends State<AddNewMedicalFile> {
                         SizedBox(height: 15),
                         // الحساسية
                         Text(
-                          'كم طولك؟',
+                          getTranslated(context, "medicalFileHeightHint"),
                           textAlign: TextAlign.right,
                           style: TextStyle(color: textsColor, fontSize: 19),
                         ),
                         SizedBox(height: 15),
-                        Directionality(
-                          textDirection: TextDirection.rtl,
-                          child: TextFormField(
-                            textAlignVertical: TextAlignVertical.center,
-                            textAlign: TextAlign.right,
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'من فضلك، ادخل الطول';
-                              }
-                              return null;
-                            },
-                            onSaved: (String value) {
-                              height = value;
-                            },
-                            decoration: InputDecoration(
-                              errorStyle: TextStyle(
-                                fontFamily: "Questv",
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color(0xff1C95FF), width: 1.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                    color: Color(0xff1C95FF), width: 1.0),
-                              ),
-                              hintText: ' مثال: 125 سنتيميتر ',
-                              hintStyle: TextStyle(
-                                color: getColor(),
-                              ),
+                        TextFormField(
+                          textAlignVertical: TextAlignVertical.center,
+                        
+                          validator: (value) {
+                            if (value.isEmpty) {
+                              return getTranslated(
+                                  context, "medicalFileHeightError");
+                            }
+                            return null;
+                          },
+                          onSaved: (String value) {
+                            height = value;
+                          },
+                          decoration: InputDecoration(
+                            errorStyle: TextStyle(
+                              fontFamily: "Questv",
                             ),
-                            keyboardType: TextInputType.number,
-                            minLines: 1,
-                            style: TextStyle(color: getColor()),
-                            textDirection: TextDirection.rtl,
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color(0xff1C95FF), width: 1.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color(0xff1C95FF), width: 1.0),
+                            ),
+                            hintText: getTranslated(
+                                context, "medicalFileHeightHint"),
+                            hintStyle: TextStyle(
+                              color: getColor(),
+                            ),
                           ),
+                          keyboardType: TextInputType.number,
+                          minLines: 1,
+                          style: TextStyle(color: getColor()),
+                         
                         ),
                         SizedBox(
                           height: 18,
@@ -399,7 +394,7 @@ class _AddNewMedicalFileState extends State<AddNewMedicalFile> {
                                 child: FlatButton(
                                   padding: EdgeInsets.all(15),
                                   child: Text(
-                                    'إلغاء',
+                                    getTranslated(context, "medicalFileCancel"),
                                     style: TextStyle(
                                         color: textsColor, fontSize: 18),
                                   ),
@@ -427,7 +422,8 @@ class _AddNewMedicalFileState extends State<AddNewMedicalFile> {
                                         content: Row(
                                           children: <Widget>[
                                             Text(
-                                              'تم تخزين الملف الطبي على ذاكرة هاتفك بنجاح.',
+                                              getTranslated(
+                                                  context, "buttonSuccessSave"),
                                               textAlign: TextAlign.right,
                                               textDirection: TextDirection.rtl,
                                               style: TextStyle(
@@ -446,7 +442,8 @@ class _AddNewMedicalFileState extends State<AddNewMedicalFile> {
                                   },
                                   padding: EdgeInsets.all(15),
                                   child: Text(
-                                    'حفظ',
+                                    getTranslated(
+                                        context, "medicalFileButtonSave"),
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 18),
                                   ),

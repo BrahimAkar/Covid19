@@ -1,3 +1,4 @@
+import 'package:covid19/localization/localization_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:covid19/theme.dart';
@@ -16,7 +17,7 @@ class _AppSettingsState extends State<AppSettings> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('الإعدادات'),
+        title: Text(getTranslated(context, "settings")),
       ),
       body: Column(
         children: <Widget>[
@@ -37,13 +38,12 @@ class _AppSettingsState extends State<AppSettings> {
                           activeColor: Colors.green,
                         ),
                         Text(
-                          'الوضع الليلي',
+                          getTranslated(context, "darkMode"),
                           style: TextStyle(fontSize: 20),
                         ),
                       ],
                     ),
                     Divider(),
-                  
                   ],
                 ),
               );

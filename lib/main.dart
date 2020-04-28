@@ -300,8 +300,13 @@ class _NotificationsettingsState extends State<Notificationsettings> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Texts().text('اعدادات التنبيه الوقائي', 30,
-                                Theme.of(context).accentColor),
+                            Text(
+                              getTranslated(context, "topText"),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  color: Theme.of(context).accentColor),
+                            )
                           ],
                         ),
                         Row(
@@ -314,56 +319,61 @@ class _NotificationsettingsState extends State<Notificationsettings> {
                         Divider(color: Colors.white, height: 60),
 
                         Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
+                              SizedBox(
+                                width: 250,
+                                child: Texts().text(
+                                    getTranslated(context, "firstNotification"),
+                                    20,
+                                    Theme.of(context).accentColor),
+                              ),
                               buildedswitch("clean", "clean", 1),
-                              SizedBox(
-                                width: 250,
-                                child: Texts().text(
-                                    'التذكير  بالحفاظ على النظافة',
-                                    20,
-                                    Theme.of(context).accentColor),
-                              )
                             ]),
                         Divider(),
 
                         Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
+                              SizedBox(
+                                width: 250,
+                                child: Texts().text(
+                                    getTranslated(
+                                        context, "secondNotification"),
+                                    20,
+                                    Theme.of(context).accentColor),
+                              ),
                               buildedswitch('getout', 'getout', 2),
-                              SizedBox(
-                                width: 250,
-                                child: Texts().text(
-                                    'التذكير بالتدابير الوقائية عند الخروج من البيت',
-                                    20,
-                                    Theme.of(context).accentColor),
-                              )
                             ]),
 
                         Divider(),
 
                         Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              buildedswitch("eat", "eat", 3),
                               SizedBox(
                                 width: 250,
-                                child: Texts().text('التذكير بنظام التغذية', 20,
+                                child: Texts().text(
+                                    getTranslated(context, "thirdNotification"),
+                                    20,
                                     Theme.of(context).accentColor),
-                              )
+                              ),
+                              buildedswitch("eat", "eat", 3),
                             ]),
 
                         // Divider(),
 
                         Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              buildedswitch("sport", "sport", 4),
                               SizedBox(
                                 width: 250,
-                                child: Texts().text('التذكير بالنظام الرياضي ',
-                                    20, Theme.of(context).accentColor),
-                              )
+                                child: Texts().text(
+                                    getTranslated(context, "fifthNotification"),
+                                    20,
+                                    Theme.of(context).accentColor),
+                              ),
+                              buildedswitch("sport", "sport", 4),
                             ]),
 
                         Divider(color: Colors.white, height: 30),
@@ -380,7 +390,8 @@ class _NotificationsettingsState extends State<Notificationsettings> {
                                     padding: EdgeInsets.all(15),
                                     onPressed: () => stopallnotifications(),
                                     child: Text(
-                                      "ايقاف الكل",
+                                      getTranslated(
+                                          context, "notificationStopAllButton"),
                                       style: TextStyle(fontSize: 15),
                                     ),
                                   ),
@@ -392,7 +403,8 @@ class _NotificationsettingsState extends State<Notificationsettings> {
                                     padding: EdgeInsets.all(15),
                                     color: Colors.green,
                                     child: Text(
-                                      'دليل إستخدام المنبه',
+                                      getTranslated(
+                                          context, "notificationGuide"),
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 15),
                                     ),

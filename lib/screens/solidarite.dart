@@ -1,3 +1,4 @@
+import 'package:covid19/localization/localization_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:covid19/widgets/cardTadabir.dart';
 
@@ -27,6 +28,7 @@ class Solidarite extends StatelessWidget {
   List<double> _stops = [0, 0.5];
   @override
   Widget build(BuildContext context) {
+    var temPicture = getTranslated(context, "picturetest");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -34,7 +36,7 @@ class Solidarite extends StatelessWidget {
         iconTheme: IconThemeData(color: Theme.of(context).accentColor),
         elevation: 1,
         title: Text(
-          'التضامن',
+          getTranslated(context, "tadamonAppBarTitle"),
           style: TextStyle(fontSize: 18, color: Theme.of(context).accentColor),
         ),
       ),
@@ -48,17 +50,19 @@ class Solidarite extends StatelessWidget {
               SizedBox(
                 height: 35,
               ),
-              CardTadabir(firstCard, _stops, texts[0], pageLinks[0], null),
+              CardTadabir(firstCard, _stops,
+                  getTranslated(context, "tadamonCard1"), pageLinks[0], null),
               SizedBox(
                 height: 9,
               ),
-              CardTadabir(fourthCard, _stops, texts[1], 'sms:1919', null),
+              CardTadabir(fourthCard, _stops,
+                  getTranslated(context, "tadamonCard2"), 'sms:1919', null),
               SizedBox(
                 height: 9,
               ),
               Container(
                   padding: EdgeInsets.only(left: 15, right: 15, top: 5),
-                  child: Image.asset('assets/images/wh.jpg')),
+                  child: Image.asset('assets/images/$temPicture')),
             ],
           ),
         ),

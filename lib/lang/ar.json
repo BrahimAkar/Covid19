@@ -5,7 +5,7 @@
     "tadamon": "التضامن",
     "tanbih": "التنبيه التلقائي",
     "tadabirwika": "التدابير الوقائية",
-    "tawari": "أرقام الطوارئ",
+    "emergency": "أرقام الطوارئ",
     "liveMapTextCardTitle": "آخر الإحصائيات بالمغرب",
     "liveMapTextCardSubtitle": "محدثة بشكل مستمر",
     "comment1": " ******** صفحة التضامن ******** ",
@@ -39,7 +39,8 @@
     "medicalFileAgeTitle": "كم عمرك؟",
     "medicalFileAgeHint": "مثال: 25 سنة",
     "medicalFileAgeError": "من فضلك أدخل العمر",
-    "medicalFileHeightHint": "كم طولك؟",
+    "medicalFileHeightHint": "مثال: 125 سنتيميتر",
+    "medicalFileHeightTitle": "كم طولك؟",
     "medicalFileHeightError": "من فضلك أدخل الطول",
     "medicalFileButtonSave": "حفظ",
     "medicalFileCancel": "إلغاء",
@@ -76,5 +77,6 @@
     "appSettings": "إعدادات التطبيق",
     "darkMode": "الوضع الليلي",
     "comment9": " ********  صفحة معلومات إضافية ******** ",
-    "appBarTitle":"تعرف أكثر على فيروس كورونا"
+    "appBarTitle": "تعرف أكثر على فيروس كورونا",
+    "picturetest": "0.png"
 }

@@ -1,3 +1,4 @@
+import 'package:covid19/localization/localization_constants.dart';
 import 'package:flutter/material.dart';
 
 class Guide extends StatelessWidget {
@@ -44,20 +45,24 @@ class Guide extends StatelessWidget {
                   SizedBox(
                     height: 28,
                   ),
-                  Text('توصيات المنبه الذكي',
+                  Text(getTranslated(context, "guideTitle"),
                       style: TextStyle(
                           fontSize: 30, color: Theme.of(context).accentColor),
                       textAlign: TextAlign.center),
                   Icon(Icons.hearing,
                       size: 50, color: Theme.of(context).accentColor),
                   diver2,
-                  CardGuide(texts[0], Colors.green, firstCard),
+                  CardGuide(getTranslated(context, "firstCardTitle"),
+                      Colors.green, firstCard),
                   diver,
-                  CardGuide(texts[1], Colors.yellow, secondCard),
+                  CardGuide(getTranslated(context, "secondCardTitle"),
+                      Colors.yellow, secondCard),
                   diver,
-                  CardGuide(texts[2], Colors.cyan, thirdard),
+                  CardGuide(getTranslated(context, "thirdCardTitle"),
+                      Colors.cyan, thirdard),
                   diver,
-                  CardGuide(texts[3], Colors.teal, fourthCard),
+                  CardGuide(getTranslated(context, "fourthCardTitle"),
+                      Colors.teal, fourthCard),
                   diver,
                 ],
               ),
