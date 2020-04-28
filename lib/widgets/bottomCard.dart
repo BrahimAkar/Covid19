@@ -1,3 +1,4 @@
+import 'package:covid19/localization/localization_constants.dart';
 import 'package:flutter/material.dart';
 
 class ButtomCard extends StatelessWidget {
@@ -29,12 +30,12 @@ class ButtomCard extends StatelessWidget {
               ),
             ),
             title: Text(
-              'آخر الإحصائيات بالمغرب',
+              getTranslated(context, "liveMapTextCardTitle"),
               style: TextStyle(color: Colors.white, fontSize: 21,fontFamily: 'Questv'),
               textAlign: TextAlign.right,
             ),
             subtitle: Text(
-              'محدثة بشكل مستمر',
+              getTranslated(context, "liveMapTextCardSubtitle"),
               style: TextStyle(color: Colors.white),
               textAlign: TextAlign.right,
               

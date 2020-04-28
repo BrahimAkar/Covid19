@@ -1,3 +1,5 @@
+import 'package:covid19/classes/language.dart';
+import 'package:covid19/localization/localization_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:covid19/widgets/bottomCard.dart';
@@ -5,6 +7,7 @@ import 'package:covid19/widgets/middleCard.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:lottie/lottie.dart';
+import '../main.dart';
 import '../theme.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -26,6 +29,13 @@ class _HomeScreenState extends State<HomeScreen>
 
   String search =
       "https://play.google.com/store/search?q=com.sensibilisation19.app&c=apps&hl=en";
+  void _changeLanguage(Language language) async {
+    Locale _temp = await setLocale(language.languageCode);
+    MyApp.setLocale(context, _temp);
+  }
+
+  
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]);
@@ -172,13 +182,36 @@ class _HomeScreenState extends State<HomeScreen>
             ),
           ),
           appBar: AppBar(
+            actions: <Widget>[
+              DropdownButton(
+                  underline: SizedBox(),
+                  onChanged: (Language language) {
+                    _changeLanguage(language);
+                  },
+                  icon: Icon(
+                    Icons.language,
+                    color: Colors.white,
+                  ),
+                  items: Language.languageList()
+                      .map<DropdownMenuItem<Language>>(
+                          (lang) => DropdownMenuItem(
+                                value: lang,
+                                child: Row(
+                                  children: <Widget>[
+                                    Text(lang.flag),
+                                    Text(lang.name)
+                                  ],
+                                ),
+                              ))
+                      .toList()),
+            ],
             iconTheme: IconThemeData(color: Theme.of(context).accentColor),
             backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             centerTitle: true,
             elevation: 1,
             //  backgroundColor: myTheme.getColor(),
             title: Text(
-              'توعية',
+              "توعية",
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: notifier.isDark ? Colors.white : Color(0xFF243953),
@@ -214,14 +247,14 @@ class _HomeScreenState extends State<HomeScreen>
                                     child: Stack(
                                       overflow: Overflow.visible,
                                       children: <Widget>[
-                                        Positioned(
-                                            top: -109,
-                                            left: 5,
-                                            child: Lottie.asset(
-                                              'assets/doctor3.json',
-                                              width: 150,
-                                              height: 437,
-                                            ))
+                                        // Positioned(
+                                        //     top: -109,
+                                        //     left: 5,
+                                        //     child: Lottie.asset(
+                                        //       'assets/doctor3.json',
+                                        //       width: 150,
+                                        //       height: 437,
+                                        //     ))
                                       ],
                                     )),
                               ),
@@ -236,7 +269,7 @@ class _HomeScreenState extends State<HomeScreen>
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
                                       Text(
-                                        'كل مايجب ان تعرفه \n لتحمي نفسك من \n فيروس كورونا',
+                                        getTranslated(context, "topCard"),
                                         textAlign: TextAlign.right,
                                         style: TextStyle(
                                             fontSize: 23,

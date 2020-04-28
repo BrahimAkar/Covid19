@@ -1,3 +1,4 @@
+import 'package:covid19/localization/localization_constants.dart';
 import 'package:flutter/material.dart';
 import 'raisedButton.dart';
 
@@ -35,7 +36,7 @@ class MiddleCard extends StatelessWidget {
                             child: Padding(
                               padding: EdgeInsets.only(right: 11),
                               child: Text(
-                                ' التضامن',
+                                getTranslated(context, "tadamon"),
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 17,
@@ -53,7 +54,7 @@ class MiddleCard extends StatelessWidget {
                   ),
                 ),
                 RaisedButtonHome(
-                  'التدابير الوقائية',
+                  getTranslated(context, "tadabirwika"),
                   'wikaya',
                   '/tadabir',
                 ),
@@ -73,8 +74,8 @@ class MiddleCard extends StatelessWidget {
               direction: Axis.horizontal, // main axis (rows or columns)
               children: <Widget>[
                 RaisedButtonHome(
-                    'التنبيه التلقائي  ', 'tanbih', '/notification'),
-                RaisedButtonHome('أرقام الطوارئ   ', 'tawari', '/sos'),
+                    getTranslated(context, "tanbih"), 'tanbih', '/notification'),
+                RaisedButtonHome(getTranslated(context, "tawari"), 'tawari', '/sos'),
               ],
             ),
           ],

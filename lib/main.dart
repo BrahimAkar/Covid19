@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:covid19/langauge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -18,8 +19,11 @@ import 'package:covid19/screens/tadabir.dart';
 import 'package:covid19/screens/test_map.dart';
 import 'package:covid19/widgets/text.dart';
 import 'package:covid19/widgets/iconbutton.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
+import 'localization/demo_localization.dart';
+import 'localization/localization_constants.dart';
 import 'theme.dart';
 import 'screens/home_screen.dart';
 import 'screens/MapLive.dart';
@@ -36,7 +40,6 @@ class ReceivedNotification {
 
   ReceivedNotification({
     @required this.id,
-
     @required this.title,
     @required this.body,
     @required this.payload,
@@ -87,50 +90,98 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key key}) : super(key: key);
+  static void setLocale(BuildContext context, Locale locale) {
+    _MyAppState state = context.findAncestorStateOfType<_MyAppState>();
+    state.setLocale(locale);
+  }
+
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  @override
-  Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays([]);
-    return ChangeNotifierProvider(
-      create: (_) => ThemeNotifier(),
-      child: MaterialAppWdg(),
-    );
+  Locale _locale;
+  void setLocale(Locale locale) {
+    Future.delayed(const Duration(milliseconds: 300), () {
+      setState(() {
+        _locale = locale;
+      });
+    });
   }
-}
 
-class MaterialAppWdg extends StatelessWidget {
+  @override
+  void didChangeDependencies() {
+    getLocale().then((locale) {
+      setState(() {
+        this._locale = locale;
+      });
+    });
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Consumer<ThemeNotifier>(
-      builder: (context, ThemeNotifier notifier, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Covid19',
-          theme: notifier.isDark ? darkMode : lightMode,
-          initialRoute: '/animation',
-          home: HomeScreen(),
-          routes: {
-            'secondscreen': (context) => SecondScreen($payload),
-            '/homescreen': (context) => HomeScreen(),
-            '/maplive': (context) => MapLive(),
-            '/coronaexp': (context) => CoronaExplain(),
-            '/sos': (context) => Sos(),
-            '/animation': (context) => MyAnimation(),
-            '/testmap': (context) => TestMap(),
-            '/tadabir': (context) => Tadabir(),
-            '/notification': (context) => Notificationsettings(),
-            '/solidarite': (context) => Solidarite(),
-            '/allimages': (context) => AllImages(),
-            '/addnewmedicalfile': (context) => AddNewMedicalFile(),
-            '/settings': (context) => AppSettings(),
+    if (_locale == null) {
+      Container(child: CircularProgressIndicator());
+    } else {
+      SystemChrome.setEnabledSystemUIOverlays([]);
+      return ChangeNotifierProvider(
+        create: (_) => ThemeNotifier(),
+        child: Consumer<ThemeNotifier>(
+          builder: (context, ThemeNotifier notifier, child) {
+            return MaterialApp(
+              supportedLocales: [
+                Locale('ar', 'MA'), // Arabic
+                Locale('fr', 'FR'), // French
+              ],
+              locale: _locale,
+              localizationsDelegates: [
+                DemoLocalizations.delegate,
+                // ... app-specific localization delegate[s] here
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              localeResolutionCallback: (deviceLocale, supportedLocales) {
+                for (var locale in supportedLocales) {
+                  if (locale.languageCode == deviceLocale.languageCode &&
+                      locale.countryCode == deviceLocale.countryCode) {
+                    return deviceLocale;
+                  }
+                }
+                return supportedLocales.first;
+              },
+              debugShowCheckedModeBanner: false,
+              title: 'Covid19',
+              theme: notifier.isDark ? darkMode : lightMode,
+              initialRoute: '/homescreen',
+              home: HomeScreen(),
+              routes: {
+                'secondscreen': (context) => SecondScreen($payload),
+                '/homescreen': (context) => HomeScreen(),
+                '/maplive': (context) => MapLive(),
+                '/coronaexp': (context) => CoronaExplain(),
+                '/sos': (context) => Sos(),
+                '/animation': (context) => MyAnimation(),
+                '/testmap': (context) => TestMap(),
+                '/tadabir': (context) => Tadabir(),
+                '/notification': (context) => Notificationsettings(),
+                '/solidarite': (context) => Solidarite(),
+                '/allimages': (context) => AllImages(),
+                '/addnewmedicalfile': (context) => AddNewMedicalFile(),
+                '/settings': (context) => AppSettings(),
+                'languageselector': (context) => LanguageSelector()
+              },
+            );
           },
-        );
-      },
-    );
+        ),
+      );
+    }
+    return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: Center(child: CircularProgressIndicator()));
   }
 }
 
@@ -207,7 +258,6 @@ class _NotificationsettingsState extends State<Notificationsettings> {
                 Navigator.of(context, rootNavigator: true).pop();
                 await Navigator.push(
                     context,
-
                     MaterialPageRoute(
                         builder: (BuildContext context) =>
                             SecondScreen($payload)));
