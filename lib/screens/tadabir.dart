@@ -1,3 +1,4 @@
+import 'package:covid19/localization/localization_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:covid19/widgets/cardTadabir.dart';
 import 'package:provider/provider.dart';
@@ -39,7 +40,7 @@ class Tadabir extends StatelessWidget {
           centerTitle: true,
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: notifier.isDark ? 0 : 1,
-          title: Text('التدابير الوقائية',
+          title: Text(getTranslated(context, "tadabirwika"),
               style: TextStyle(
                 color: Theme.of(context).accentColor,
               )),
@@ -54,28 +55,37 @@ class Tadabir extends StatelessWidget {
                 SizedBox(
                   height: 35,
                 ),
-                CardTadabir(firstCard, _stops, texts[0], pageLinks[0], null),
+                CardTadabir(firstCard, _stops,
+                    getTranslated(context, "tadabirCard1"), pageLinks[0], null),
                 SizedBox(
                   height: 9,
                 ),
-                CardTadabir(secondCard, _stops, texts[1], pageLinks[1], null),
+                CardTadabir(secondCard, _stops,
+                    getTranslated(context, "tadabirCard2"), pageLinks[1], null),
                 SizedBox(
                   height: 9,
                 ),
-                CardTadabir(thirdard, _stops, texts[2], pageLinks[2], ""),
+                CardTadabir(thirdard, _stops,
+                    getTranslated(context, "tadabirCard3"), pageLinks[2], ""),
                 SizedBox(
                   height: 9,
                 ),
-                CardTadabir(fourthCard, _stops, texts[3], null, "/allimages"),
+                CardTadabir(fourthCard, _stops,
+                    getTranslated(context, "tadabirCard4"), null, "/allimages"),
                 SizedBox(
                   height: 9,
                 ),
                 CardTadabir(
-                    fifthCard, _stops, texts[4], null, "/addnewmedicalfile"),
+                    fifthCard,
+                    _stops,
+                    getTranslated(context, "tadabirCard5"),
+                    null,
+                    "/addnewmedicalfile"),
                 SizedBox(
                   height: 9,
                 ),
-                CardTadabir(sixthCard, _stops, texts[5], null, "/testmap"),
+                CardTadabir(sixthCard, _stops,
+                    getTranslated(context, "tadabirCard6"), null, "/testmap"),
                 SizedBox(
                   height: 9,
                 ),

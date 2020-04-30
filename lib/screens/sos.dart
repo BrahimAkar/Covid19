@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:covid19/localization/localization_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -25,7 +26,7 @@ class _SosState extends State<Sos> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 1,
         title: Text(
-          'أرقام الطوارئ',
+          getTranslated(context, "emergency"),
           style: TextStyle(fontSize: 18, color: Theme.of(context).accentColor),
         ),
       ),

@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:covid19/langauge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -18,8 +19,11 @@ import 'package:covid19/screens/tadabir.dart';
 import 'package:covid19/screens/test_map.dart';
 import 'package:covid19/widgets/text.dart';
 import 'package:covid19/widgets/iconbutton.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
+import 'localization/demo_localization.dart';
+import 'localization/localization_constants.dart';
 import 'theme.dart';
 import 'screens/home_screen.dart';
 import 'screens/MapLive.dart';
@@ -36,7 +40,6 @@ class ReceivedNotification {
 
   ReceivedNotification({
     @required this.id,
-
     @required this.title,
     @required this.body,
     @required this.payload,
@@ -87,50 +90,98 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({Key key}) : super(key: key);
+  static void setLocale(BuildContext context, Locale locale) {
+    _MyAppState state = context.findAncestorStateOfType<_MyAppState>();
+    state.setLocale(locale);
+  }
+
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  @override
-  Widget build(BuildContext context) {
-    SystemChrome.setEnabledSystemUIOverlays([]);
-    return ChangeNotifierProvider(
-      create: (_) => ThemeNotifier(),
-      child: MaterialAppWdg(),
-    );
+  Locale _locale;
+  void setLocale(Locale locale) {
+    Future.delayed(const Duration(milliseconds: 300), () {
+      setState(() {
+        _locale = locale;
+      });
+    });
   }
-}
 
-class MaterialAppWdg extends StatelessWidget {
+  @override
+  void didChangeDependencies() {
+    getLocale().then((locale) {
+      setState(() {
+        this._locale = locale;
+      });
+    });
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Consumer<ThemeNotifier>(
-      builder: (context, ThemeNotifier notifier, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Covid19',
-          theme: notifier.isDark ? darkMode : lightMode,
-          initialRoute: '/animation',
-          home: HomeScreen(),
-          routes: {
-            'secondscreen': (context) => SecondScreen($payload),
-            '/homescreen': (context) => HomeScreen(),
-            '/maplive': (context) => MapLive(),
-            '/coronaexp': (context) => CoronaExplain(),
-            '/sos': (context) => Sos(),
-            '/animation': (context) => MyAnimation(),
-            '/testmap': (context) => TestMap(),
-            '/tadabir': (context) => Tadabir(),
-            '/notification': (context) => Notificationsettings(),
-            '/solidarite': (context) => Solidarite(),
-            '/allimages': (context) => AllImages(),
-            '/addnewmedicalfile': (context) => AddNewMedicalFile(),
-            '/settings': (context) => AppSettings(),
+    if (_locale == null) {
+      Container(child: CircularProgressIndicator());
+    } else {
+      SystemChrome.setEnabledSystemUIOverlays([]);
+      return ChangeNotifierProvider(
+        create: (_) => ThemeNotifier(),
+        child: Consumer<ThemeNotifier>(
+          builder: (context, ThemeNotifier notifier, child) {
+            return MaterialApp(
+              supportedLocales: [
+                Locale('ar', 'MA'), // Arabic
+                Locale('fr', 'FR'), // French
+              ],
+              locale: _locale,
+              localizationsDelegates: [
+                DemoLocalizations.delegate,
+                // ... app-specific localization delegate[s] here
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              localeResolutionCallback: (deviceLocale, supportedLocales) {
+                for (var locale in supportedLocales) {
+                  if (locale.languageCode == deviceLocale.languageCode &&
+                      locale.countryCode == deviceLocale.countryCode) {
+                    return deviceLocale;
+                  }
+                }
+                return supportedLocales.first;
+              },
+              debugShowCheckedModeBanner: false,
+              title: 'Covid19',
+              theme: notifier.isDark ? darkMode : lightMode,
+              initialRoute: '/homescreen',
+              home: HomeScreen(),
+              routes: {
+                'secondscreen': (context) => SecondScreen($payload),
+                '/homescreen': (context) => HomeScreen(),
+                '/maplive': (context) => MapLive(),
+                '/coronaexp': (context) => CoronaExplain(),
+                '/sos': (context) => Sos(),
+                '/animation': (context) => MyAnimation(),
+                '/testmap': (context) => TestMap(),
+                '/tadabir': (context) => Tadabir(),
+                '/notification': (context) => Notificationsettings(),
+                '/solidarite': (context) => Solidarite(),
+                '/allimages': (context) => AllImages(),
+                '/addnewmedicalfile': (context) => AddNewMedicalFile(),
+                '/settings': (context) => AppSettings(),
+                'languageselector': (context) => LanguageSelector()
+              },
+            );
           },
-        );
-      },
-    );
+        ),
+      );
+    }
+    return Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: Center(child: CircularProgressIndicator()));
   }
 }
 
@@ -207,7 +258,6 @@ class _NotificationsettingsState extends State<Notificationsettings> {
                 Navigator.of(context, rootNavigator: true).pop();
                 await Navigator.push(
                     context,
-
                     MaterialPageRoute(
                         builder: (BuildContext context) =>
                             SecondScreen($payload)));
@@ -250,8 +300,13 @@ class _NotificationsettingsState extends State<Notificationsettings> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Texts().text('اعدادات التنبيه الوقائي', 30,
-                                Theme.of(context).accentColor),
+                            Text(
+                              getTranslated(context, "topText"),
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  color: Theme.of(context).accentColor),
+                            )
                           ],
                         ),
                         Row(
@@ -264,56 +319,61 @@ class _NotificationsettingsState extends State<Notificationsettings> {
                         Divider(color: Colors.white, height: 60),
 
                         Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
+                              SizedBox(
+                                width: 250,
+                                child: Texts().text(
+                                    getTranslated(context, "firstNotification"),
+                                    20,
+                                    Theme.of(context).accentColor),
+                              ),
                               buildedswitch("clean", "clean", 1),
-                              SizedBox(
-                                width: 250,
-                                child: Texts().text(
-                                    'التذكير  بالحفاظ على النظافة',
-                                    20,
-                                    Theme.of(context).accentColor),
-                              )
                             ]),
                         Divider(),
 
                         Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
+                              SizedBox(
+                                width: 250,
+                                child: Texts().text(
+                                    getTranslated(
+                                        context, "secondNotification"),
+                                    20,
+                                    Theme.of(context).accentColor),
+                              ),
                               buildedswitch('getout', 'getout', 2),
-                              SizedBox(
-                                width: 250,
-                                child: Texts().text(
-                                    'التذكير بالتدابير الوقائية عند الخروج من البيت',
-                                    20,
-                                    Theme.of(context).accentColor),
-                              )
                             ]),
 
                         Divider(),
 
                         Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              buildedswitch("eat", "eat", 3),
                               SizedBox(
                                 width: 250,
-                                child: Texts().text('التذكير بنظام التغذية', 20,
+                                child: Texts().text(
+                                    getTranslated(context, "thirdNotification"),
+                                    20,
                                     Theme.of(context).accentColor),
-                              )
+                              ),
+                              buildedswitch("eat", "eat", 3),
                             ]),
 
                         // Divider(),
 
                         Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                              buildedswitch("sport", "sport", 4),
                               SizedBox(
                                 width: 250,
-                                child: Texts().text('التذكير بالنظام الرياضي ',
-                                    20, Theme.of(context).accentColor),
-                              )
+                                child: Texts().text(
+                                    getTranslated(context, "fifthNotification"),
+                                    20,
+                                    Theme.of(context).accentColor),
+                              ),
+                              buildedswitch("sport", "sport", 4),
                             ]),
 
                         Divider(color: Colors.white, height: 30),
@@ -330,7 +390,8 @@ class _NotificationsettingsState extends State<Notificationsettings> {
                                     padding: EdgeInsets.all(15),
                                     onPressed: () => stopallnotifications(),
                                     child: Text(
-                                      "ايقاف الكل",
+                                      getTranslated(
+                                          context, "notificationStopAllButton"),
                                       style: TextStyle(fontSize: 15),
                                     ),
                                   ),
@@ -342,7 +403,8 @@ class _NotificationsettingsState extends State<Notificationsettings> {
                                     padding: EdgeInsets.all(15),
                                     color: Colors.green,
                                     child: Text(
-                                      'دليل إستخدام المنبه',
+                                      getTranslated(
+                                          context, "notificationGuide"),
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 15),
                                     ),

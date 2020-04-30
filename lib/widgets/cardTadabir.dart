@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class CardTadabir extends StatelessWidget {
   List<Color> colors = [];
   List<double> stops = [];
@@ -16,14 +15,14 @@ class CardTadabir extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 11.0, left: 11.0),
       child: Container(
-         decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.topLeft,
-                  colors: colors,
-                  //     //  stops: stops,
-                )),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.topLeft,
+              colors: colors,
+              //     //  stops: stops,
+            )),
         child: Material(
           color: Colors.transparent,
           child: InkWell(
@@ -36,38 +35,39 @@ class CardTadabir extends StatelessWidget {
               }
             },
             child: Container(
-          //    margin: EdgeInsets.all(5.0),
+              //    margin: EdgeInsets.all(5.0),
               padding: EdgeInsets.only(right: 15),
-             
-              height: MediaQuery.of(context).size.height/9,
+
+              height: MediaQuery.of(context).size.height / 7,
               width: MediaQuery.of(context).size.width,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
-                  Flexible(
-                    flex: 6,
-                    child: Text(
-                      textCardTadabir,
-                      textAlign: TextAlign.right,
-                      textDirection: TextDirection.rtl,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold),
+              child: Padding(
+                padding: const EdgeInsets.all(7.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Flexible(
+                      flex: 11,
+                      child: Text(
+                        textCardTadabir,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 15,
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: Icon(
-                      Icons.info_outline,
-                      color: Colors.white,
-                      size: 29,
+                    SizedBox(
+                      width: 15,
                     ),
-                  ),
-                ],
+                    Flexible(
+                      flex: 1,
+                      child: Icon(
+                        Icons.info_outline,
+                        color: Colors.white,
+                        size: 29,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
